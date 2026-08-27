@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Line Logic Map Engine</title>
+
+  <!-- MAPLIBRE STYLES -->
+  <link
+    href="https://unpkg.com/maplibre-gl@5.6.1/dist/maplibre-gl.css"
+    rel="stylesheet"
+  >
+
+  <!-- LINE LOGIC STYLES -->
+  <link
+    rel="stylesheet"
+    href="style.css?v=20260826-9"
+  >
+</head>
+
+<body>
+
+  <!-- MAP -->
+  <div id="map"></div>
+
+  <!-- SCENARIO INFORMATION -->
+  <div id="stagePanel">
+    <div id="stageNumber"></div>
+    <h2 id="stageName"></h2>
+    <p id="stageText"></p>
+  </div>
+
+  <!-- TELTU ROUTE SELECTION -->
+  <section
+    id="flightChoicePanel"
+    aria-labelledby="flightChoiceTitle"
+    hidden
+  >
+    <div class="flight-choice-kicker">
+      TELTU REACHED
+    </div>
+
+    <h2 id="flightChoiceTitle">
+      Choose the next route
+    </h2>
+
+    <p id="flightChoiceText">
+      Select one recorded outcome to continue.
+    </p>
+
+    <div class="flight-choice-buttons">
+      <button
+        id="flightChoiceOne"
+        class="flight-choice-button"
+        type="button"
+      ></button>
+
+      <button
+        id="flightChoiceTwo"
+        class="flight-choice-button"
+        type="button"
+      ></button>
+
+      <button
+        id="flightChoiceThree"
+        class="flight-choice-button"
+        type="button"
+      ></button>
+    </div>
+  </section>
+
+  <!-- FORCED INTERACTION PAUSE -->
+  <section
+    id="interactionPausePanel"
+    aria-labelledby="interactionPauseTitle"
+    hidden
+  >
+    <span
+      id="interactionPauseNumber"
+      class="interaction-number-badge"
+      aria-label="Interaction number"
+      hidden
+    ></span>
+
+    <div
+      id="interactionPauseKicker"
+      class="interaction-pause-kicker"
+    >
+      FLIGHT COMPLETE
+    </div>
+
+    <h2 id="interactionPauseTitle">
+      Simulation paused
+    </h2>
+
+    <p id="interactionPauseText">
+      Continue when you are ready.
+    </p>
+
+    <button
+      id="interactionContinueButton"
+      type="button"
+    >
+      CONTINUE
+    </button>
+  </section>
+
+  <!-- DESCENT MODES INTERACTION -->
+  <button
+    id="descentModesPrompt"
+    type="button"
+    hidden
+  >
+    DESCENT MODES
+  </button>
+
+  <section
+    id="descentModesOverlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="descentModesTitle"
+    hidden
+  >
+    <div class="descent-modes-dialog">
+      <span
+        id="descentModesNumber"
+        class="interaction-number-badge descent-modes-number"
+        aria-label="Interaction number"
+      >
+        02
+      </span>
+
+      <h2 id="descentModesTitle">
+        Descent modes
+      </h2>
+
+      <div class="descent-modes-body">
+        <div
+          class="descent-modes-text-placeholder"
+        >
+          some text
+        </div>
+
+        <div class="descent-modes-video-wrap">
+          <video
+            id="descentModesVideo"
+            playsinline
+            preload="metadata"
+          >
+            <source
+              src="assets/descent-modes-pfd-compressed.mp4?v=20260827-1"
+              type="video/mp4"
+            >
+          </video>
+        </div>
+      </div>
+
+      <button
+        id="descentModesClose"
+        type="button"
+        aria-label="Close Descent modes and continue"
+      >
+        ×
+      </button>
+    </div>
+  </section>
+
+  <!-- PLAYBACK PROFILE AND CONTROL -->
+  <div id="playbackControls">
+
+    <section
+      id="verticalProfilePanel"
+      aria-labelledby="verticalProfileTitle"
+    >
+      <div class="vertical-profile-header">
+        <span id="verticalProfileTitle">
+          VERTICAL PROFILE
+        </span>
+
+        <output id="verticalProfileAltitude">
+          0 FT
+        </output>
+      </div>
+
+      <canvas
+        id="verticalProfileCanvas"
+        width="560"
+        height="180"
+        role="img"
+        aria-label="Recorded vertical flight profile"
+      ></canvas>
+
+      <div class="vertical-profile-footer">
+        <span>START · 36,000 FT</span>
+        <span>FINISH</span>
+      </div>
+    </section>
+
+    <!-- DISPLAY CONTROLS -->
+    <aside
+      id="displayControls"
+      aria-label="Display options"
+    >
+      <div class="display-controls-title">
+        DISPLAY
+      </div>
+
+      <button
+        id="magentaRouteToggle"
+        class="display-toggle"
+        type="button"
+        aria-pressed="true"
+      >
+        <span
+          class="display-toggle-switch"
+          aria-hidden="true"
+        ></span>
+        <span>ATC ROUTE</span>
+      </button>
+
+      <button
+        id="verticalProfileToggle"
+        class="display-toggle"
+        type="button"
+        aria-controls="verticalProfilePanel"
+        aria-pressed="true"
+      >
+        <span
+          class="display-toggle-switch"
+          aria-hidden="true"
+        ></span>
+        <span>VERTICAL PROFILE</span>
+      </button>
+
+    </aside>
+
+    <!-- TEMPORARY MANUAL PAUSE AND TIMER -->
+    <section
+      id="manualPauseControl"
+      aria-label="Manual playback timer"
+    >
+      <div class="manual-pause-timer">
+        <span>ELAPSED</span>
+        <output id="playbackTimer">00:00.0</output>
+      </div>
+
+      <button
+        id="pauseButton"
+        type="button"
+        aria-pressed="false"
+        disabled
+      >
+        PAUSE
+      </button>
+    </section>
+
+    <button id="nextButton">
+      PLAY
+    </button>
+
+  </div>
+
+  <!-- MAPLIBRE ENGINE -->
+  <script
+    src="https://unpkg.com/maplibre-gl@5.6.1/dist/maplibre-gl.js">
+  </script>
+
+  <!-- LINE LOGIC SCENARIO DATA -->
+  <script src="scenario.js?v=20260823-3"></script>
+
+  <!-- SECOND RECORDED ARRIVAL -->
+  <script src="second-flight.js?v=20260823-1"></script>
+
+  <!-- THIRD RECORDED ARRIVAL / GO-AROUND -->
+  <script src="third-flight.js?v=20260823-1"></script>
+
+  <!-- LINE LOGIC MAP ENGINE -->
+  <script src="script.js?v=20260826-13"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,966 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+#map {
+  width: 100%;
+  height: 100vh;
+}
+
+/* OWN AIRCRAFT */
+
+.own-aircraft-marker {
+  pointer-events: none;
+  transform-origin: center;
+}
+
+.own-aircraft-marker img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+}
+
+/* TOP OF DESCENT */
+
+.top-of-descent-marker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 104px;
+  height: 42px;
+
+  transition: opacity 120ms linear;
+  pointer-events: none;
+}
+
+.top-of-descent-arrow {
+  position: absolute;
+  top: -8px;
+  left: 0;
+
+  width: 60px;
+  height: 36px;
+
+  filter:
+    drop-shadow(0 0 1px rgba(47, 58, 53, 0.88))
+    drop-shadow(0 1px 1px rgba(47, 58, 53, 0.42));
+}
+
+/* TELTU 1N WAYPOINTS */
+
+.range-ring-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  padding: 2px 5px;
+  color: #596472;
+  background: rgba(255, 255, 255, 0.84);
+  border: 1px solid rgba(105, 116, 130, 0.24);
+  border-radius: 3px;
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.waypoint-marker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  pointer-events: none;
+}
+
+.waypoint-symbol {
+  position: absolute;
+  inset: 1px;
+  z-index: 2;
+
+  box-sizing: border-box;
+  background: #c65f98;
+  border: 0;
+  filter: drop-shadow(0 1px 1px rgba(112, 41, 81, 0.3));
+  -webkit-clip-path: polygon(
+    50% 0,
+    100% 100%,
+    0 100%
+  );
+  clip-path: polygon(
+    50% 0,
+    100% 100%,
+    0 100%
+  );
+}
+
+.waypoint-symbol::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+
+  background: rgba(255, 255, 255, 0.96);
+  -webkit-clip-path: polygon(
+    50% 0,
+    100% 100%,
+    0 100%
+  );
+  clip-path: polygon(
+    50% 0,
+    100% 100%,
+    0 100%
+  );
+}
+
+.waypoint-label {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  z-index: 1;
+
+  padding: 3px 6px;
+  color: #85456a;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(198, 95, 152, 0.34);
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(112, 41, 81, 0.12);
+
+  font-size: 11px;
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  transform: translateY(-50%);
+}
+
+.waypoint-label strong {
+  font-weight: 700;
+}
+
+.waypoint-level {
+  display: block;
+  margin-top: 2px;
+  color: #a64d7e;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* LONDON AIRPORTS */
+
+.runway-marker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 34px;
+  height: 34px;
+  pointer-events: none;
+}
+
+.runway-strip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  box-sizing: border-box;
+  width: 5px;
+  height: 32px;
+  background: rgba(95, 104, 118, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.96);
+  border-radius: 1px;
+  box-shadow: 0 0 0 1px rgba(68, 77, 91, 0.3);
+  transform: translate(-50%, -50%);
+}
+
+.runway-marker--parallel .runway-strip {
+  width: 4px;
+}
+
+.runway-marker--parallel .runway-strip--1 {
+  margin-left: -4px;
+}
+
+.runway-marker--parallel .runway-strip--2 {
+  margin-left: 4px;
+}
+
+.airport-marker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+
+.airport-symbol {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.96);
+  border: 2px solid #5f6876;
+  border-radius: 50%;
+  box-shadow: 0 1px 4px rgba(41, 46, 55, 0.28);
+}
+
+.airport-symbol::before,
+.airport-symbol::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 2px;
+  height: 11px;
+  background: #5f6876;
+  border-radius: 1px;
+  transform-origin: center;
+}
+
+.airport-symbol::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.airport-symbol::after {
+  height: 7px;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.airport-label {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  z-index: 2;
+
+  padding: 3px 6px;
+  color: #444d5b;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(95, 104, 118, 0.32);
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(41, 46, 55, 0.12);
+
+  font-size: 11px;
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  transform: translateY(-50%);
+}
+
+.airport-code {
+  display: block;
+  color: #697482;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.airport-marker--west .airport-label {
+  right: 20px;
+  left: auto;
+}
+
+.airport-marker--northwest .airport-label {
+  right: 16px;
+  bottom: 14px;
+  left: auto;
+  top: auto;
+  transform: none;
+}
+
+.airport-marker--southwest .airport-label {
+  top: 14px;
+  right: 16px;
+  left: auto;
+  transform: none;
+}
+
+/* SCENARIO INFORMATION PANEL */
+
+#stagePanel {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  z-index: 10;
+
+  width: 280px;
+  padding: 18px 20px;
+
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 8px;
+}
+
+#stageNumber {
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+#stageName {
+  margin: 0 0 10px 0;
+  font-size: 22px;
+}
+
+#stageText {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+/* TELTU ROUTE SELECTION */
+
+#flightChoicePanel,
+#interactionPausePanel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 20;
+
+  box-sizing: border-box;
+  width: 330px;
+  padding: 20px;
+
+  color: #4d5662;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(91, 101, 115, 0.22);
+  border-radius: 10px;
+  box-shadow: 0 10px 36px rgba(38, 46, 55, 0.2);
+  transform: translate(-50%, -50%);
+}
+
+#interactionPausePanel {
+  text-align: center;
+}
+
+.interaction-number-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  min-width: 27px;
+  height: 22px;
+  padding: 0 6px;
+
+  color: #8d3f6a;
+  background: rgba(198, 95, 152, 0.08);
+  border: 1px solid rgba(198, 95, 152, 0.2);
+  border-radius: 999px;
+
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.interaction-number-badge[hidden] {
+  display: none;
+}
+
+.descent-modes-number {
+  top: 20px;
+  right: 20px;
+}
+
+.flight-choice-kicker {
+  margin-bottom: 6px;
+  color: #a64d7e;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+#flightChoiceTitle {
+  margin: 0 0 7px;
+  font-size: 20px;
+}
+
+#flightChoiceText {
+  margin: 0 0 15px;
+  color: #69727d;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.interaction-pause-kicker {
+  margin-bottom: 6px;
+  color: #5f8f73;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+#interactionPauseTitle {
+  margin: 0 0 7px;
+  font-size: 20px;
+}
+
+#interactionPauseText {
+  margin: 0 0 15px;
+  color: #69727d;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+#interactionContinueButton {
+  width: 100%;
+  padding: 12px 14px;
+
+  color: #ffffff;
+  background: #5f8f73;
+  border: 1px solid #517c64;
+  border-radius: 7px;
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  cursor: pointer;
+  transition:
+    background 140ms ease,
+    box-shadow 140ms ease,
+    transform 140ms ease;
+}
+
+#interactionContinueButton:hover {
+  background: #517c64;
+  box-shadow: 0 4px 14px rgba(38, 46, 55, 0.16);
+  transform: translateY(-1px);
+}
+
+#interactionContinueButton:focus-visible {
+  outline: 2px solid rgba(95, 143, 115, 0.55);
+  outline-offset: 2px;
+}
+
+/* DESCENT MODES INTERACTION */
+
+#descentModesPrompt {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 30;
+
+  min-width: 190px;
+  padding: 16px 22px;
+
+  color: #ffffff;
+  background: #c65f98;
+  border: 1px solid #a9487e;
+  border-radius: 9px;
+  box-shadow: 0 0 0 rgba(198, 95, 152, 0.45);
+  transform: translate(-50%, -50%);
+
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  animation: descent-mode-pulse 1.25s ease-in-out infinite;
+}
+
+#descentModesPrompt:hover {
+  background: #b34d87;
+}
+
+#descentModesPrompt:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 3px;
+}
+
+@keyframes descent-mode-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 0 rgba(198, 95, 152, 0.45),
+      0 7px 22px rgba(64, 40, 54, 0.2);
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 13px rgba(198, 95, 152, 0),
+      0 9px 28px rgba(198, 95, 152, 0.36);
+    transform: translate(-50%, -50%) scale(1.045);
+  }
+}
+
+#descentModesOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+
+  display: grid;
+  place-items: center;
+  padding: 24px;
+
+  background: rgba(36, 42, 50, 0.48);
+  backdrop-filter: blur(3px);
+}
+
+#descentModesOverlay[hidden] {
+  display: none;
+}
+
+.descent-modes-dialog {
+  position: relative;
+  box-sizing: border-box;
+  width: min(820px, calc(100vw - 48px));
+  min-height: 430px;
+  padding: 24px 24px 68px;
+
+  color: #4d5662;
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid rgba(91, 101, 115, 0.24);
+  border-radius: 12px;
+  box-shadow: 0 18px 52px rgba(26, 32, 40, 0.28);
+}
+
+#descentModesTitle {
+  margin: 0 0 18px;
+  color: #8d3f6a;
+  font-size: 24px;
+  font-weight: 750;
+}
+
+.descent-modes-body {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.8fr) minmax(0, 1.2fr);
+  min-height: 305px;
+  gap: 22px;
+}
+
+.descent-modes-video-wrap {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+
+  min-width: 0;
+  background: #11151a;
+  border: 1px solid rgba(91, 101, 115, 0.22);
+  border-radius: 8px;
+}
+
+#descentModesVideo {
+  display: block;
+  width: 100%;
+  max-height: 305px;
+  background: #000000;
+  object-fit: contain;
+}
+
+.descent-modes-text-placeholder {
+  display: grid;
+  place-items: center;
+
+  padding: 24px;
+
+  color: #8d3f6a;
+  border: 1px dashed rgba(198, 95, 152, 0.42);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(198, 95, 152, 0.04),
+      rgba(95, 143, 115, 0.025)
+    );
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+}
+
+#descentModesClose {
+  position: absolute;
+  right: 20px;
+  bottom: 18px;
+
+  width: 40px;
+  height: 40px;
+  padding: 0;
+
+  color: #ffffff;
+  background: #c65f98;
+  border: 1px solid #a9487e;
+  border-radius: 50%;
+
+  font-size: 25px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+#descentModesClose:hover {
+  background: #b34d87;
+}
+
+#descentModesClose:focus-visible {
+  outline: 3px solid rgba(198, 95, 152, 0.4);
+  outline-offset: 3px;
+}
+
+.flight-choice-buttons {
+  display: grid;
+  gap: 8px;
+}
+
+.flight-choice-button {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px 14px;
+
+  color: #8d3f6a;
+  background: rgba(198, 95, 152, 0.07);
+  border: 1px solid rgba(198, 95, 152, 0.32);
+  border-radius: 7px;
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    opacity 140ms ease,
+    transform 140ms ease;
+}
+
+.flight-choice-button:hover:not(:disabled) {
+  background: rgba(198, 95, 152, 0.14);
+  border-color: rgba(198, 95, 152, 0.58);
+  transform: translateY(-1px);
+}
+
+.flight-choice-button:focus-visible {
+  outline: 2px solid rgba(198, 95, 152, 0.65);
+  outline-offset: 2px;
+}
+
+.flight-choice-button[data-played='true'] {
+  color: #8a9097;
+  background: rgba(91, 101, 115, 0.05);
+  border-color: rgba(91, 101, 115, 0.16);
+  opacity: 0.38;
+  cursor: default;
+  filter: saturate(0.35);
+}
+
+/* DISPLAY CONTROLS */
+
+#displayControls {
+  box-sizing: border-box;
+  width: 184px;
+  padding: 12px;
+
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(91, 101, 115, 0.2);
+  border-radius: 8px;
+  box-shadow: 0 3px 14px rgba(38, 46, 55, 0.12);
+}
+
+.display-controls-title {
+  margin: 0 2px 8px;
+  color: #636c78;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.display-toggle {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 8px;
+  padding: 8px 7px;
+
+  color: #59626e;
+  background: transparent;
+  border: 0;
+  border-radius: 5px;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.045em;
+  text-align: left;
+  cursor: pointer;
+}
+
+.display-toggle:hover {
+  background: rgba(198, 95, 152, 0.07);
+}
+
+.display-toggle:focus-visible {
+  outline: 2px solid rgba(198, 95, 152, 0.62);
+  outline-offset: 1px;
+}
+
+.display-toggle-switch {
+  position: relative;
+  flex: 0 0 auto;
+
+  box-sizing: border-box;
+  width: 26px;
+  height: 15px;
+  background: #c7cbd0;
+  border-radius: 999px;
+  transition: background 140ms ease;
+}
+
+.display-toggle-switch::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+
+  width: 9px;
+  height: 9px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 1px 2px rgba(42, 48, 57, 0.28);
+  transition: transform 140ms ease;
+}
+
+.display-toggle[aria-pressed='true']
+  .display-toggle-switch {
+  background: #c65f98;
+}
+
+.display-toggle[aria-pressed='true']
+  .display-toggle-switch::after {
+  transform: translateX(11px);
+}
+
+/* PLAYBACK PROFILE AND CONTROL */
+
+#playbackControls {
+  position: absolute;
+  right: 30px;
+  bottom: 30px;
+  z-index: 10;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+#verticalProfilePanel {
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+
+  box-sizing: border-box;
+  width: 300px;
+  padding: 12px 14px 10px;
+
+  color: #4e5663;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(91, 101, 115, 0.2);
+  border-radius: 8px;
+  box-shadow: 0 3px 14px rgba(38, 46, 55, 0.12);
+}
+
+.vertical-profile-header,
+.vertical-profile-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.vertical-profile-header {
+  margin-bottom: 7px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+#verticalProfileAltitude {
+  color: #a64d7e;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+#verticalProfileCanvas {
+  display: block;
+  width: 272px;
+  height: 90px;
+
+  background: rgba(247, 246, 242, 0.78);
+  border-radius: 5px;
+}
+
+.vertical-profile-footer {
+  margin-top: 5px;
+  color: #777f89;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+/* TEMPORARY MANUAL PAUSE AND TIMER */
+
+#manualPauseControl {
+  box-sizing: border-box;
+  width: 184px;
+  padding: 10px 12px 12px;
+
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(91, 101, 115, 0.2);
+  border-radius: 8px;
+  box-shadow: 0 3px 14px rgba(38, 46, 55, 0.12);
+}
+
+.manual-pause-timer {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 0 2px 9px;
+
+  color: #636c78;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+#playbackTimer {
+  color: #9d4776;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+}
+
+#pauseButton {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 8px 10px;
+
+  color: #9d4776;
+  background: rgba(198, 95, 152, 0.06);
+  border: 1px solid rgba(198, 95, 152, 0.28);
+  border-radius: 5px;
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+}
+
+#pauseButton:hover:not(:disabled) {
+  background: rgba(198, 95, 152, 0.12);
+  border-color: rgba(198, 95, 152, 0.48);
+}
+
+#pauseButton[aria-pressed='true'] {
+  color: #ffffff;
+  background: #c65f98;
+  border-color: #c65f98;
+}
+
+#pauseButton:focus-visible {
+  outline: 2px solid rgba(198, 95, 152, 0.62);
+  outline-offset: 2px;
+}
+
+#pauseButton:disabled {
+  color: #8b9199;
+  background: rgba(91, 101, 115, 0.04);
+  border-color: rgba(91, 101, 115, 0.15);
+  opacity: 0.72;
+  cursor: default;
+}
+
+#nextButton {
+  box-sizing: border-box;
+  width: 184px;
+  padding: 14px 18px;
+
+  color: #9d4776;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(198, 95, 152, 0.34);
+  border-radius: 8px;
+  box-shadow: 0 3px 14px rgba(38, 46, 55, 0.12);
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+
+  cursor: pointer;
+  transition:
+    color 140ms ease,
+    background 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    transform 140ms ease;
+}
+
+#nextButton:hover:not(:disabled) {
+  color: #84345f;
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(198, 95, 152, 0.62);
+  box-shadow: 0 5px 18px rgba(38, 46, 55, 0.16);
+  transform: translateY(-1px);
+}
+
+#nextButton:active:not(:disabled) {
+  box-shadow: 0 2px 9px rgba(38, 46, 55, 0.12);
+  transform: translateY(0);
+}
+
+#nextButton:focus-visible {
+  outline: 2px solid rgba(198, 95, 152, 0.62);
+  outline-offset: 2px;
+}
+
+#nextButton:disabled {
+  color: #777f89;
+  border-color: rgba(91, 101, 115, 0.2);
+  opacity: 0.78;
+  cursor: default;
+}
+
+@media (max-width: 640px) {
+
+  #flightChoicePanel,
+  #interactionPausePanel {
+    width: min(330px, calc(100vw - 32px));
+  }
+
+  #descentModesOverlay {
+    padding: 16px;
+  }
+
+  .descent-modes-dialog {
+    width: calc(100vw - 32px);
+    min-height: 0;
+  }
+
+  .descent-modes-body {
+    grid-template-columns: 1fr;
+  }
+
+  #playbackControls {
+    right: 16px;
+    bottom: 16px;
+  }
+
+  #verticalProfilePanel {
+    bottom: 16px;
+    left: 16px;
+    width: min(300px, calc(100vw - 32px));
+  }
+
+  #verticalProfileCanvas {
+    width: 100%;
+  }
+}
