@@ -17,6 +17,8 @@ body {
 .own-aircraft-marker {
   pointer-events: none;
   transform-origin: center;
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 .own-aircraft-marker img {

@@ -1166,6 +1166,16 @@ map.on('load', () => {
       playbackProgress >=
         descentProgress;
 
+    if (
+      element.hasReachedTopOfDescent ===
+        hasReachedTopOfDescent
+    ) {
+      return;
+    }
+
+    element.hasReachedTopOfDescent =
+      hasReachedTopOfDescent;
+
     element.style.opacity =
       hasReachedTopOfDescent ?
         '0' :
@@ -2123,8 +2133,15 @@ map.on('load', () => {
   const zoomStartProgress =
     topOfDescentProgress;
 
+  const useLightweightMobileAnimation =
+    window.matchMedia(
+      '(max-width: 640px), (pointer: coarse)'
+    ).matches;
+
   const cameraUpdateInterval =
-    100;
+    useLightweightMobileAnimation ?
+      1000 / 30 :
+      100;
 
   let lastCameraUpdateTime =
     -Infinity;
@@ -2180,13 +2197,22 @@ map.on('load', () => {
       zoomProgress * zoomProgress *
       (3 - 2 * zoomProgress);
 
-    map.easeTo({
+    const cameraPosition = {
       center: position,
       zoom: interpolate(
         routeOverviewCamera.zoom,
         aircraftTrackingZoom,
         smoothZoomProgress
-      ),
+      )
+    };
+
+    if (useLightweightMobileAnimation) {
+      map.jumpTo(cameraPosition);
+      return;
+    }
+
+    map.easeTo({
+      ...cameraPosition,
       duration: 180,
       easing: progress => progress
     });
@@ -4393,10 +4419,16 @@ map.on('load', () => {
 
   function updatePlaybackTimer() {
 
-    playbackTimer.textContent =
+    const timerText =
       formatPlaybackTime(
         sequenceElapsedMilliseconds
       );
+
+    if (playbackTimer.textContent === timerText) {
+      return;
+    }
+
+    playbackTimer.textContent = timerText;
   }
 
 
@@ -4544,7 +4576,12 @@ map.on('load', () => {
       -Infinity;
 
     const detailUpdateInterval =
-      1000 / 30;
+      1000 /
+        (
+          useLightweightMobileAnimation ?
+            15 :
+            30
+        );
 
 
     isPlaying = true;
