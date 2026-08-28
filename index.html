@@ -20,7 +20,7 @@
   <!-- LINE LOGIC STYLES -->
   <link
     rel="stylesheet"
-    href="style.css?v=20260827-2"
+    href="style.css?v=20260828-23"
   >
 </head>
 
@@ -29,12 +29,35 @@
   <!-- MAP -->
   <div id="map"></div>
 
-  <!-- SCENARIO INFORMATION -->
-  <div id="stagePanel">
-    <div id="stageNumber"></div>
-    <h2 id="stageName"></h2>
-    <p id="stageText"></p>
-  </div>
+  <!-- LINE LOGIC SCENARIO IDENTITY -->
+  <header
+    id="stagePanel"
+    aria-label="Line Logic scenario LL001, revision August 26"
+  >
+    <img
+      class="stage-brand-logo"
+      src="assets/line-logic-logo.png?v=20260828-1"
+      alt="Line Logic for Wizz Air UK"
+      draggable="false"
+    >
+
+    <div class="stage-brand-meta">
+      <strong>LL001</strong>
+      <span>REVISION</span>
+      <time datetime="2026-08-26">
+        AUGUST 26
+      </time>
+    </div>
+
+    <div
+      class="stage-status-visually-hidden"
+      aria-live="polite"
+    >
+      <div id="stageNumber"></div>
+      <h2 id="stageName"></h2>
+      <p id="stageText"></p>
+    </div>
+  </header>
 
   <!-- TELTU ROUTE SELECTION -->
   <section
@@ -99,9 +122,32 @@
       Simulation paused
     </h2>
 
+    <iframe
+      id="interactionEmbed"
+      title="Interactive training content"
+      sandbox="allow-scripts"
+      referrerpolicy="no-referrer"
+      hidden
+    ></iframe>
+
     <p id="interactionPauseText">
       Continue when you are ready.
     </p>
+
+    <button
+      id="interactionResourceButton"
+      class="interaction-resource-button"
+      type="button"
+      aria-label="Open interaction reference"
+      hidden
+    >
+      <img
+        id="interactionResourceThumbnail"
+        alt=""
+        draggable="false"
+      >
+      <span>OPEN BRIEFING GUIDE</span>
+    </button>
 
     <button
       id="interactionContinueButton"
@@ -123,7 +169,6 @@
   <section
     id="descentModesOverlay"
     role="dialog"
-    aria-modal="true"
     aria-labelledby="descentModesTitle"
     hidden
   >
@@ -141,10 +186,55 @@
       </h2>
 
       <div class="descent-modes-body">
-        <div
-          class="descent-modes-text-placeholder"
-        >
-          some text
+        <div class="descent-modes-text">
+          <p>
+            Choosing a descent mode for a situation is important.
+            We need to consider things such as:
+          </p>
+
+          <ul>
+            <li>
+              <strong>ATC requirements</strong>
+              <em>– Speed and “level by” clearances</em>
+            </li>
+
+            <li>
+              <strong>Airspace limitations</strong>
+              <em>
+                – Max rate of climb or descent within a certain
+                heights from a cleared level
+              </em>
+            </li>
+
+            <li>
+              <strong>Lateral navigation mode</strong>
+              <em>– HDG or NAV</em>
+            </li>
+
+            <li>
+              <strong>Programmed data</strong>
+              <em>– Descent speeds and wind data</em>
+            </li>
+          </ul>
+
+          <p>
+            Route knowledge (observed or read), will
+            <strong>MASSIVELY</strong> feed into your expectation.
+            OMC briefs and Fly Guide knowledge are invaluable.
+          </p>
+
+          <p>
+            <strong>READ THE ROOM</strong> – What can you hear other
+            aircraft on frequency getting? This will feed into the
+            route knowledge expectation.
+          </p>
+
+          <p>
+            If your plan isn’t working, do something about it. A
+            problem fixed early will easy to overcome than one fixed
+            later, as you are likely to deviate further away from the
+            ideal flight path.
+          </p>
         </div>
 
         <div class="descent-modes-video-wrap">
@@ -165,6 +255,338 @@
         id="descentModesClose"
         type="button"
         aria-label="Close Descent modes and continue"
+      >
+        ×
+      </button>
+    </div>
+  </section>
+
+  <!-- FLIGHT BAG WEATHER WINDOW -->
+  <section
+    id="flightBagWeatherOverlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="flightBagWeatherTitle"
+    hidden
+  >
+    <div class="flight-bag-weather-window">
+      <h2 id="flightBagWeatherTitle">
+        LTN Arrival ATIS
+      </h2>
+
+      <div class="flight-bag-weather-body">
+        <p class="flight-bag-atis-message">
+          EGGW Arrival ATIS A, Expect ILS R07,
+          170/9, 120v180, F050, 28/15,
+          QNH1020. NOSIG
+        </p>
+      </div>
+
+      <button
+        id="flightBagWeatherClose"
+        type="button"
+        aria-label="Close LTN Arrival ATIS"
+      >
+        ×
+      </button>
+    </div>
+  </section>
+
+  <!-- FLIGHT BAG LIDO SELECTOR -->
+  <section
+    id="flightBagLidoOverlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="flightBagLidoTitle"
+    hidden
+  >
+    <div class="flight-bag-lido-window">
+      <h2 id="flightBagLidoTitle">
+        Lido Plates
+      </h2>
+
+      <div class="lido-plate-grid">
+        <button
+          class="lido-plate-choice"
+          type="button"
+          data-plate-src="assets/lido-ils07.png?v=20260828-1"
+          data-plate-title="ILS 07"
+        >
+          <img
+            src="assets/lido-ils07.png?v=20260828-1"
+            alt=""
+            loading="lazy"
+            decoding="async"
+            draggable="false"
+          >
+          <span>ILS 07</span>
+        </button>
+
+        <button
+          class="lido-plate-choice"
+          type="button"
+          data-plate-src="assets/lido-rnav07.png?v=20260828-1"
+          data-plate-title="RNAV 07"
+        >
+          <img
+            src="assets/lido-rnav07.png?v=20260828-1"
+            alt=""
+            loading="lazy"
+            decoding="async"
+            draggable="false"
+          >
+          <span>RNAV 07</span>
+        </button>
+
+        <button
+          class="lido-plate-choice"
+          type="button"
+          data-plate-src="assets/lido-teltu1n.png?v=20260828-1"
+          data-plate-title="TELTU 1N"
+        >
+          <img
+            src="assets/lido-teltu1n.png?v=20260828-1"
+            alt=""
+            loading="lazy"
+            decoding="async"
+            draggable="false"
+          >
+          <span>TELTU 1N</span>
+        </button>
+      </div>
+
+      <button
+        id="flightBagLidoClose"
+        type="button"
+        aria-label="Close Lido Plates"
+      >
+        ×
+      </button>
+    </div>
+  </section>
+
+  <!-- FULL-SCREEN LIDO PLATE VIEWER -->
+  <section
+    id="lidoPlateViewer"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="lidoPlateViewerTitle"
+    hidden
+  >
+    <div class="lido-plate-viewer-header">
+      <h2 id="lidoPlateViewerTitle">
+        Lido Plate
+      </h2>
+
+      <button
+        id="lidoPlateViewerClose"
+        type="button"
+        aria-label="Close plate and return to Lido Plates"
+      >
+        ×
+      </button>
+    </div>
+
+    <div class="lido-plate-viewer-stage">
+      <img
+        id="lidoPlateViewerImage"
+        alt=""
+        draggable="false"
+      >
+    </div>
+  </section>
+
+  <!-- FULL-SCREEN INTERACTION REFERENCE VIEWER -->
+  <section
+    id="interactionResourceViewer"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="interactionResourceViewerTitle"
+    hidden
+  >
+    <div class="interaction-resource-viewer-header">
+      <h2 id="interactionResourceViewerTitle">
+        Interaction Reference
+      </h2>
+
+      <button
+        id="interactionResourceViewerClose"
+        type="button"
+        aria-label="Close interaction reference"
+      >
+        ×
+      </button>
+    </div>
+
+    <div class="interaction-resource-viewer-stage">
+      <img
+        id="interactionResourceViewerImage"
+        alt=""
+        draggable="false"
+      >
+    </div>
+  </section>
+
+  <!-- TIMESTAMP 01 QUESTIONS -->
+  <section
+    id="questionContentOverlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="questionContentTitle"
+    hidden
+  >
+    <div class="question-content-dialog">
+      <span
+        id="questionContentNumber"
+        class="interaction-number-badge question-content-number"
+        aria-label="Interaction number 01"
+      >
+        01
+      </span>
+
+      <h2 id="questionContentTitle">
+        Questions
+      </h2>
+
+      <div class="question-content-sequence">
+        <p class="question-content-question">
+          <strong>Q:</strong>
+          <span id="questionContentText"></span>
+        </p>
+
+        <button
+          id="questionContentNext"
+          type="button"
+        >
+          NEXT QUESTION
+        </button>
+
+        <div
+          id="questionContentChoices"
+          class="question-content-choices"
+          role="group"
+          aria-label="Answer choices"
+          hidden
+        >
+          <button type="button" aria-pressed="false">
+            OP DES / HDG
+          </button>
+
+          <button type="button" aria-pressed="false">
+            FPA / HDG
+          </button>
+
+          <button
+            type="button"
+            aria-pressed="false"
+            data-correct="true"
+          >
+            V/S / HDG
+          </button>
+        </div>
+
+        <video
+          id="descentManagementVideo"
+          src="assets/descent-management-vs-hdg.mp4?v=20260828-1"
+          playsinline
+          preload="auto"
+          hidden
+        ></video>
+
+        <div
+          id="questionContentProgressRow"
+          class="question-content-progress-row"
+        >
+          <span id="questionContentProgressText">
+            QUESTION 1 OF 3
+          </span>
+
+          <div
+            id="questionContentProgress"
+            role="progressbar"
+            aria-label="Question progress"
+            aria-valuemin="1"
+            aria-valuemax="3"
+            aria-valuenow="1"
+          >
+            <span id="questionContentProgressFill"></span>
+          </div>
+
+          <input
+            id="descentManagementQuestionSlider"
+            type="range"
+            min="1"
+            max="3"
+            step="1"
+            value="1"
+            aria-label="Choose Descent Management question"
+            hidden
+          >
+        </div>
+      </div>
+
+      <button
+        id="questionContentClose"
+        type="button"
+        aria-label="Close questions"
+      >
+        ×
+      </button>
+    </div>
+  </section>
+
+  <!-- TIMESTAMP 02 REFERENCE MATERIAL -->
+  <section
+    id="referenceContentOverlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="referenceContentTitle"
+    hidden
+  >
+    <div class="reference-content-dialog">
+      <span
+        id="referenceContentNumber"
+        class="interaction-number-badge reference-content-number"
+        aria-label="Interaction number 02"
+      >
+        02
+      </span>
+
+      <h2 id="referenceContentTitle">
+        Reference material
+      </h2>
+
+      <p
+        id="referenceContentIntro"
+        class="reference-content-intro"
+      >
+        Consider the following:
+      </p>
+
+      <ul
+        id="referenceContentList"
+        class="reference-content-list"
+      >
+        <li>
+          <strong>OMA:</strong>
+          <span>8.3.0.1.1.9.4 – Rate of descent</span>
+        </li>
+
+        <li>
+          <strong>FCTM:</strong>
+          <span>PR-NP-SOP-170 P (Pages 293–299)</span>
+        </li>
+
+        <li>
+          <strong>LIDO:</strong>
+          <span>3.189.4.4 (Example for UK)</span>
+        </li>
+      </ul>
+
+      <button
+        id="referenceContentClose"
+        type="button"
+        aria-label="Close reference material"
       >
         ×
       </button>
@@ -202,69 +624,231 @@
       </div>
     </section>
 
+    <!-- TIMED INTERACTIVE CONTENT -->
+    <aside
+      id="learningContentControls"
+      aria-label="Interactive content"
+    >
+      <div class="learning-content-title">
+        INTERACT
+      </div>
+
+      <div class="learning-content-buttons">
+        <button
+          id="questionContentButton"
+          class="learning-content-button"
+          type="button"
+          aria-label="Question, not yet available"
+          title="Question"
+          disabled
+        >
+          Q
+        </button>
+
+        <button
+          id="referenceContentButton"
+          class="learning-content-button"
+          type="button"
+          aria-label="Reference material, not yet available"
+          title="Reference material"
+          disabled
+        >
+          Ref
+        </button>
+
+        <button
+          id="pilotPerspectiveContentButton"
+          class="learning-content-button"
+          type="button"
+          aria-label="Pilot Perspective, not yet available"
+          title="Pilot Perspective"
+          disabled
+        >
+          PP
+        </button>
+      </div>
+    </aside>
+
     <!-- DISPLAY CONTROLS -->
     <aside
       id="displayControls"
+      class="control-menu"
       aria-label="Display options"
     >
-      <div class="display-controls-title">
-        DISPLAY
+      <button
+        id="displayMenuToggle"
+        class="control-menu-toggle"
+        type="button"
+        aria-controls="displayMenuContent"
+        aria-expanded="false"
+      >
+        <span>DISPLAY</span>
+        <span
+          class="control-menu-symbol"
+          aria-hidden="true"
+        >+</span>
+      </button>
+
+      <div
+        id="displayMenuContent"
+        class="control-menu-content"
+        hidden
+      >
+        <button
+          id="magentaRouteToggle"
+          class="display-toggle"
+          type="button"
+          aria-pressed="true"
+        >
+          <span
+            class="display-toggle-switch"
+            aria-hidden="true"
+          ></span>
+          <span>ATC ROUTE</span>
+        </button>
+
+        <button
+          id="verticalProfileToggle"
+          class="display-toggle"
+          type="button"
+          aria-controls="verticalProfilePanel"
+          aria-pressed="true"
+        >
+          <span
+            class="display-toggle-switch"
+            aria-hidden="true"
+          ></span>
+          <span>VERTICAL PROFILE</span>
+        </button>
       </div>
-
-      <button
-        id="magentaRouteToggle"
-        class="display-toggle"
-        type="button"
-        aria-pressed="true"
-      >
-        <span
-          class="display-toggle-switch"
-          aria-hidden="true"
-        ></span>
-        <span>ATC ROUTE</span>
-      </button>
-
-      <button
-        id="verticalProfileToggle"
-        class="display-toggle"
-        type="button"
-        aria-controls="verticalProfilePanel"
-        aria-pressed="true"
-      >
-        <span
-          class="display-toggle-switch"
-          aria-hidden="true"
-        ></span>
-        <span>VERTICAL PROFILE</span>
-      </button>
-
     </aside>
 
-    <!-- TEMPORARY MANUAL PAUSE AND TIMER -->
-    <section
-      id="manualPauseControl"
-      aria-label="Manual playback timer"
+    <!-- FLIGHT BAG -->
+    <aside
+      id="flightBagControls"
+      class="control-menu"
+      aria-label="Flight Bag"
     >
-      <div class="manual-pause-timer">
-        <span>ELAPSED</span>
-        <output id="playbackTimer">00:00.0</output>
-      </div>
-
       <button
-        id="pauseButton"
+        id="flightBagMenuToggle"
+        class="control-menu-toggle"
         type="button"
-        aria-pressed="false"
-        disabled
+        aria-controls="flightBagMenuContent"
+        aria-expanded="false"
       >
-        PAUSE
+        <span>FLIGHT BAG</span>
+        <span
+          class="control-menu-symbol"
+          aria-hidden="true"
+        >+</span>
       </button>
-    </section>
 
-    <button id="nextButton">
-      PLAY
-    </button>
+      <div
+        id="flightBagMenuContent"
+        class="control-menu-content"
+        hidden
+      >
+        <div class="flight-bag-grid">
+          <button
+            id="flightBagWeather"
+            class="flight-bag-item"
+            type="button"
+            aria-label="Weather"
+            title="Weather"
+          >
+            <img
+              src="assets/flight-bag-weather.png?v=20260828-1"
+              alt=""
+              draggable="false"
+            >
+          </button>
+
+          <button
+            id="flightBagLido"
+            class="flight-bag-item"
+            type="button"
+            aria-label="Lido plates"
+            title="Lido plates"
+          >
+            <img
+              src="assets/flight-bag-lido.png?v=20260828-1"
+              alt=""
+              draggable="false"
+            >
+          </button>
+        </div>
+      </div>
+    </aside>
 
   </div>
+
+  <!-- CENTRED PLAYBACK TRANSPORT -->
+  <nav
+    id="transportControls"
+    aria-label="Simulation playback"
+  >
+    <output
+      id="playbackTimer"
+      class="stage-status-visually-hidden"
+    >
+      00:00.0
+    </output>
+
+    <button
+      id="restartButton"
+      class="transport-button"
+      type="button"
+      aria-label="Restart simulation"
+      title="Restart"
+    >
+      <span aria-hidden="true">↻</span>
+    </button>
+
+    <button
+      id="previousTimestampButton"
+      class="transport-button"
+      type="button"
+      aria-label="Go to previous timestamp"
+      title="Previous timestamp"
+      disabled
+    >
+      <span aria-hidden="true">⏮</span>
+    </button>
+
+    <button
+      id="pauseButton"
+      class="transport-button transport-play-button"
+      type="button"
+      aria-label="Play simulation"
+      aria-pressed="false"
+      title="Play"
+      disabled
+    >
+      <span
+        id="playbackToggleSymbol"
+        aria-hidden="true"
+      >▶</span>
+    </button>
+
+    <button
+      id="nextTimestampButton"
+      class="transport-button"
+      type="button"
+      aria-label="Go to next timestamp"
+      title="Next timestamp"
+    >
+      <span aria-hidden="true">⏭</span>
+    </button>
+  </nav>
+
+  <!-- INTERNAL LEGACY SEQUENCE TRIGGER -->
+  <button
+    id="nextButton"
+    type="button"
+    tabindex="-1"
+    aria-hidden="true"
+    hidden
+  ></button>
 
   <!-- MAPLIBRE ENGINE -->
   <script
@@ -281,7 +865,7 @@
   <script src="third-flight.js?v=20260823-1"></script>
 
   <!-- LINE LOGIC MAP ENGINE -->
-  <script src="script.js?v=20260827-2"></script>
+  <script src="script.js?v=20260828-28"></script>
 
 </body>
 

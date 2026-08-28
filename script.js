@@ -2275,6 +2275,11 @@ map.on('load', () => {
       'interactionPauseTitle'
     );
 
+  const interactionEmbed =
+    document.getElementById(
+      'interactionEmbed'
+    );
+
   const interactionPauseNumber =
     document.getElementById(
       'interactionPauseNumber'
@@ -2283,6 +2288,16 @@ map.on('load', () => {
   const interactionPauseText =
     document.getElementById(
       'interactionPauseText'
+    );
+
+  const interactionResourceButton =
+    document.getElementById(
+      'interactionResourceButton'
+    );
+
+  const interactionResourceThumbnail =
+    document.getElementById(
+      'interactionResourceThumbnail'
     );
 
   const interactionContinueButton =
@@ -2315,6 +2330,290 @@ map.on('load', () => {
       'descentModesClose'
     );
 
+  const displayMenuToggle =
+    document.getElementById(
+      'displayMenuToggle'
+    );
+
+  const displayMenuContent =
+    document.getElementById(
+      'displayMenuContent'
+    );
+
+  const flightBagMenuToggle =
+    document.getElementById(
+      'flightBagMenuToggle'
+    );
+
+  const flightBagMenuContent =
+    document.getElementById(
+      'flightBagMenuContent'
+    );
+
+  const flightBagWeatherButton =
+    document.getElementById(
+      'flightBagWeather'
+    );
+
+  const flightBagWeatherOverlay =
+    document.getElementById(
+      'flightBagWeatherOverlay'
+    );
+
+  const flightBagWeatherClose =
+    document.getElementById(
+      'flightBagWeatherClose'
+    );
+
+  const flightBagLidoButton =
+    document.getElementById(
+      'flightBagLido'
+    );
+
+  const flightBagLidoOverlay =
+    document.getElementById(
+      'flightBagLidoOverlay'
+    );
+
+  const flightBagLidoClose =
+    document.getElementById(
+      'flightBagLidoClose'
+    );
+
+  const lidoPlateChoices =
+    document.querySelectorAll(
+      '.lido-plate-choice'
+    );
+
+  const lidoPlateViewer =
+    document.getElementById(
+      'lidoPlateViewer'
+    );
+
+  const lidoPlateViewerTitle =
+    document.getElementById(
+      'lidoPlateViewerTitle'
+    );
+
+  const lidoPlateViewerImage =
+    document.getElementById(
+      'lidoPlateViewerImage'
+    );
+
+  const lidoPlateViewerClose =
+    document.getElementById(
+      'lidoPlateViewerClose'
+    );
+
+  const interactionResourceViewer =
+    document.getElementById(
+      'interactionResourceViewer'
+    );
+
+  const interactionResourceViewerTitle =
+    document.getElementById(
+      'interactionResourceViewerTitle'
+    );
+
+  const interactionResourceViewerImage =
+    document.getElementById(
+      'interactionResourceViewerImage'
+    );
+
+  const interactionResourceViewerClose =
+    document.getElementById(
+      'interactionResourceViewerClose'
+    );
+
+  const questionContentButton =
+    document.getElementById(
+      'questionContentButton'
+    );
+
+  const questionContentOverlay =
+    document.getElementById(
+      'questionContentOverlay'
+    );
+
+  const questionContentNumber =
+    document.getElementById(
+      'questionContentNumber'
+    );
+
+  const questionContentTitle =
+    document.getElementById(
+      'questionContentTitle'
+    );
+
+  const questionContentClose =
+    document.getElementById(
+      'questionContentClose'
+    );
+
+  const questionContentText =
+    document.getElementById(
+      'questionContentText'
+    );
+
+  const questionContentNext =
+    document.getElementById(
+      'questionContentNext'
+    );
+
+  const questionContentProgressText =
+    document.getElementById(
+      'questionContentProgressText'
+    );
+
+  const questionContentProgress =
+    document.getElementById(
+      'questionContentProgress'
+    );
+
+  const questionContentProgressFill =
+    document.getElementById(
+      'questionContentProgressFill'
+    );
+
+  const questionContentProgressRow =
+    document.getElementById(
+      'questionContentProgressRow'
+    );
+
+  const descentManagementQuestionSlider =
+    document.getElementById(
+      'descentManagementQuestionSlider'
+    );
+
+  const questionContentChoices =
+    document.getElementById(
+      'questionContentChoices'
+    );
+
+  const questionContentChoiceButtons =
+    questionContentChoices.querySelectorAll(
+      'button'
+    );
+
+  const descentManagementVideo =
+    document.getElementById(
+      'descentManagementVideo'
+    );
+
+  const referenceContentButton =
+    document.getElementById(
+      'referenceContentButton'
+    );
+
+  const referenceContentOverlay =
+    document.getElementById(
+      'referenceContentOverlay'
+    );
+
+  const referenceContentClose =
+    document.getElementById(
+      'referenceContentClose'
+    );
+
+  const referenceContentNumber =
+    document.getElementById(
+      'referenceContentNumber'
+    );
+
+  const referenceContentIntro =
+    document.getElementById(
+      'referenceContentIntro'
+    );
+
+  const referenceContentList =
+    document.getElementById(
+      'referenceContentList'
+    );
+
+  const timestampOneQuestions = [
+    'How could the forecast weather affect the approach?',
+    'What Extra fuel / time are you likely to have?',
+    'What threats could we face between TOD and the runway?'
+  ];
+
+  const timestampFourQuestions = [
+    'Does selecting anti-icing ON affect the descent profile?'
+  ];
+
+  const timestampReferences = {
+    4000: [
+      {
+        label: 'OMA',
+        text: '8.3.0.1.1.9.4 – Rate of descent'
+      },
+      {
+        label: 'FCTM',
+        text: 'PR-NP-SOP-170 P (Pages 293–299)'
+      },
+      {
+        label: 'LIDO',
+        text: '3.189.4.4 (Example for UK)'
+      }
+    ],
+    11600: [
+      {
+        label: 'FCOM',
+        text: 'LIM/Ice and Rain Protection – Page 5153'
+      },
+      {
+        label: 'FCOM',
+        text: 'PRO-NOR-SOP – Page 4563'
+      }
+    ]
+  };
+
+  const timestampThreeQuestions = [
+    {
+      text:
+        'When in a managed descent, what modes will the aircraft default to, if given a heading?',
+      answers: [
+        'OP DES / HDG',
+        'FPA / HDG',
+        'V/S / HDG'
+      ],
+      correctAnswerIndex: 2,
+      hasVideo: true,
+      videoSrc:
+        'assets/descent-management-vs-hdg.mp4?v=20260828-1'
+    },
+    {
+      text:
+        'If ATC ask you to be level abeam TELTU, are you complying currently?',
+      answers: [
+        'Yes – no FCU change required',
+        'No – unable',
+        'No – increase V/S'
+      ],
+      correctAnswerIndex: 2,
+      hasVideo: true,
+      videoSrc:
+        'assets/descent-management-teltu-level.mp4?v=20260828-1'
+    },
+    {
+      text:
+        'How else could we adjust the flight path to achieve a level abeam TELTU?',
+      answers: [
+        'Increase speed – consider speed brake',
+        'Push for DES mode',
+        'Unable'
+      ],
+      correctAnswerIndex: 0,
+      hasVideo: true,
+      videoSrc:
+        'assets/descent-management-speed-brake.mp4?v=20260828-1'
+    }
+  ];
+
+  let questionContentIndex = 0;
+  let descentManagementQuestionIndex = 0;
+  let activeQuestionTimestamp = null;
+  let activeReferenceTimestamp = null;
+
   const magentaRouteToggle =
     document.getElementById(
       'magentaRouteToggle'
@@ -2345,6 +2644,26 @@ map.on('load', () => {
 
   const pauseButton =
     document.getElementById('pauseButton');
+
+  const restartButton =
+    document.getElementById(
+      'restartButton'
+    );
+
+  const previousTimestampButton =
+    document.getElementById(
+      'previousTimestampButton'
+    );
+
+  const nextTimestampButton =
+    document.getElementById(
+      'nextTimestampButton'
+    );
+
+  const playbackToggleSymbol =
+    document.getElementById(
+      'playbackToggleSymbol'
+    );
 
   const playbackTimer =
     document.getElementById('playbackTimer');
@@ -2383,6 +2702,603 @@ map.on('load', () => {
   let verticalProfileVisible = true;
   let pfdVisible = false;
   let latestPfdState = null;
+  let lastSelectedLidoPlate = null;
+
+
+  function setControlMenuOpen(
+    button,
+    content,
+    isOpen
+  ) {
+
+    button.setAttribute(
+      'aria-expanded',
+      isOpen ? 'true' : 'false'
+    );
+
+    content.hidden = !isOpen;
+
+    const symbol =
+      button.querySelector(
+        '.control-menu-symbol'
+      );
+
+    symbol.textContent =
+      isOpen ? '−' : '+';
+  }
+
+
+  function addControlMenuBehaviour(
+    button,
+    content
+  ) {
+
+    button.addEventListener(
+      'click',
+      () => {
+
+        const isOpen =
+          button.getAttribute(
+            'aria-expanded'
+          ) === 'true';
+
+        setControlMenuOpen(
+          button,
+          content,
+          !isOpen
+        );
+      }
+    );
+
+    setControlMenuOpen(
+      button,
+      content,
+      false
+    );
+  }
+
+
+  function openFlightBagWeather() {
+
+    flightBagLidoOverlay.hidden = true;
+    lidoPlateViewer.hidden = true;
+    flightBagWeatherOverlay.hidden = false;
+    flightBagWeatherClose.focus();
+  }
+
+
+  function closeFlightBagWeather() {
+
+    flightBagWeatherOverlay.hidden = true;
+    flightBagWeatherButton.focus();
+  }
+
+
+  function openFlightBagLido() {
+
+    flightBagWeatherOverlay.hidden = true;
+    lidoPlateViewer.hidden = true;
+    flightBagLidoOverlay.hidden = false;
+
+    const firstPlate =
+      lidoPlateChoices[0];
+
+    if (firstPlate) {
+      firstPlate.focus();
+    }
+  }
+
+
+  function closeFlightBagLido() {
+
+    flightBagLidoOverlay.hidden = true;
+    lidoPlateViewer.hidden = true;
+    flightBagLidoButton.focus();
+  }
+
+
+  function openLidoPlate(plateButton) {
+
+    const plateTitle =
+      plateButton.dataset.plateTitle;
+
+    lastSelectedLidoPlate =
+      plateButton;
+
+    lidoPlateViewerTitle.textContent =
+      plateTitle;
+
+    lidoPlateViewerImage.src =
+      plateButton.dataset.plateSrc;
+
+    lidoPlateViewerImage.alt =
+      `${plateTitle} Lido plate`;
+
+    flightBagLidoOverlay.hidden = true;
+    lidoPlateViewer.hidden = false;
+    lidoPlateViewerClose.focus();
+  }
+
+
+  function closeLidoPlateViewer() {
+
+    lidoPlateViewer.hidden = true;
+    flightBagLidoOverlay.hidden = false;
+
+    if (lastSelectedLidoPlate) {
+      lastSelectedLidoPlate.focus();
+    }
+  }
+
+
+  function openInteractionResource() {
+
+    const resourceSource =
+      interactionResourceButton.dataset
+        .resourceSrc;
+
+    if (!resourceSource) {
+      return;
+    }
+
+    const resourceTitle =
+      interactionResourceButton.dataset
+        .resourceTitle ||
+      'Interaction Reference';
+
+    interactionResourceViewerTitle
+      .textContent = resourceTitle;
+
+    interactionResourceViewerImage.src =
+      resourceSource;
+
+    interactionResourceViewerImage.alt =
+      interactionResourceButton.dataset
+        .resourceAlt ||
+      resourceTitle;
+
+    interactionResourceViewer.hidden = false;
+    interactionResourceViewerClose.focus();
+  }
+
+
+  function closeInteractionResource() {
+
+    interactionResourceViewer.hidden = true;
+
+    if (!interactionResourceButton.hidden) {
+      interactionResourceButton.focus();
+    }
+  }
+
+
+  function updateQuestionContent() {
+
+    const questions =
+      activeQuestionTimestamp === 11600 ?
+        timestampFourQuestions :
+        timestampOneQuestions;
+
+    const questionNumber =
+      questionContentIndex + 1;
+
+    const questionCount =
+      questions.length;
+
+    questionContentText.textContent =
+      questions[
+        questionContentIndex
+      ];
+
+    questionContentProgressText.textContent =
+      `QUESTION ${questionNumber} OF ${questionCount}`;
+
+    questionContentProgress.setAttribute(
+      'aria-valuenow',
+      String(questionNumber)
+    );
+
+    questionContentProgress.setAttribute(
+      'aria-valuemax',
+      String(questionCount)
+    );
+
+    questionContentProgressFill.style.width =
+      `${(
+        questionNumber / questionCount
+      ) * 100}%`;
+
+    questionContentNext.textContent =
+      questionNumber === questionCount ?
+        'BACK TO FIRST' :
+        'NEXT QUESTION';
+  }
+
+
+  function updateDescentManagementQuestion(
+    questionIndex
+  ) {
+
+    descentManagementQuestionIndex =
+      Math.min(
+        Math.max(questionIndex, 0),
+        timestampThreeQuestions.length - 1
+      );
+
+    const question =
+      timestampThreeQuestions[
+        descentManagementQuestionIndex
+      ];
+
+    questionContentText.textContent =
+      question.text;
+
+    questionContentChoiceButtons.forEach(
+      (button, answerIndex) => {
+        button.textContent =
+          question.answers[answerIndex];
+
+        button.setAttribute(
+          'aria-pressed',
+          'false'
+        );
+
+        delete button.dataset.result;
+
+        if (
+          answerIndex ===
+            question.correctAnswerIndex
+        ) {
+          button.dataset.correct = 'true';
+        } else {
+          delete button.dataset.correct;
+        }
+      }
+    );
+
+    descentManagementQuestionSlider.value =
+      String(
+        descentManagementQuestionIndex + 1
+      );
+
+    questionContentProgressText.textContent =
+      `QUESTION ${
+        descentManagementQuestionIndex + 1
+      } OF ${timestampThreeQuestions.length}`;
+
+    descentManagementVideo.pause();
+
+    if (question.hasVideo) {
+      if (
+        descentManagementVideo.getAttribute(
+          'src'
+        ) !== question.videoSrc
+      ) {
+        descentManagementVideo.setAttribute(
+          'src',
+          question.videoSrc
+        );
+
+        descentManagementVideo.load();
+      } else {
+        descentManagementVideo.currentTime = 0;
+      }
+    } else {
+      descentManagementVideo.currentTime = 0;
+    }
+
+    descentManagementVideo.hidden =
+      !question.hasVideo;
+  }
+
+
+  function setQuestionContentAvailable(
+    isAvailable,
+    timestamp = 1000
+  ) {
+
+    questionContentButton.disabled =
+      !isAvailable;
+
+    if (isAvailable) {
+      activeQuestionTimestamp = timestamp;
+
+      questionContentButton.setAttribute(
+        'data-pulse',
+        'true'
+      );
+    } else {
+      activeQuestionTimestamp = null;
+
+      questionContentButton.removeAttribute(
+        'data-pulse'
+      );
+
+      descentManagementVideo.pause();
+      descentManagementVideo.currentTime = 0;
+      descentManagementVideo.hidden = true;
+      questionContentOverlay.hidden = true;
+    }
+
+    questionContentButton.setAttribute(
+      'aria-label',
+      isAvailable ?
+        `Open timestamp ${String(
+          forcedPauseTimes.indexOf(timestamp) + 1
+        ).padStart(2, '0')} questions` :
+        'Question, not yet available'
+    );
+  }
+
+
+  function openQuestionContent() {
+
+    if (questionContentButton.disabled) {
+      return;
+    }
+
+    questionContentButton.removeAttribute(
+      'data-pulse'
+    );
+
+    const isDescentManagementQuestion =
+      activeQuestionTimestamp === 9000;
+
+    const isIceQuestion =
+      activeQuestionTimestamp === 11600;
+
+    questionContentNumber.textContent =
+      isDescentManagementQuestion ?
+        '03' :
+        (isIceQuestion ? '04' : '01');
+
+    questionContentNumber.setAttribute(
+      'aria-label',
+      isDescentManagementQuestion ?
+        'Interaction number 03' :
+        (
+          isIceQuestion ?
+            'Interaction number 04' :
+            'Interaction number 01'
+        )
+    );
+
+    questionContentTitle.textContent =
+      isDescentManagementQuestion ?
+        'Descent Management' :
+        (isIceQuestion ? 'Ice' : 'Questions');
+
+    questionContentNext.hidden =
+      isDescentManagementQuestion ||
+      isIceQuestion;
+
+    questionContentProgressRow.hidden = false;
+
+    questionContentProgress.hidden =
+      isDescentManagementQuestion;
+
+    descentManagementQuestionSlider.hidden =
+      !isDescentManagementQuestion;
+
+    questionContentChoices.hidden =
+      !isDescentManagementQuestion;
+
+    if (isDescentManagementQuestion) {
+      updateDescentManagementQuestion(0);
+    } else {
+      descentManagementVideo.pause();
+      descentManagementVideo.currentTime = 0;
+      descentManagementVideo.hidden = true;
+      questionContentIndex = 0;
+      updateQuestionContent();
+    }
+
+    questionContentOverlay.hidden = false;
+
+    if (isDescentManagementQuestion) {
+      questionContentChoiceButtons[0].focus();
+    } else {
+      questionContentNext.focus();
+    }
+  }
+
+
+  function closeQuestionContent() {
+
+    descentManagementVideo.pause();
+    questionContentOverlay.hidden = true;
+    questionContentButton.focus();
+  }
+
+
+  function showNextQuestion() {
+
+    const questions =
+      activeQuestionTimestamp === 11600 ?
+        timestampFourQuestions :
+        timestampOneQuestions;
+
+    questionContentIndex =
+      (
+        questionContentIndex + 1
+      ) % questions.length;
+
+    updateQuestionContent();
+  }
+
+
+  function selectQuestionChoice(event) {
+
+    questionContentChoiceButtons.forEach(
+      button => {
+        button.setAttribute(
+          'aria-pressed',
+          String(button === event.currentTarget)
+        );
+
+        delete button.dataset.result;
+      }
+    );
+
+    const selectedButton =
+      event.currentTarget;
+
+    const isCorrect =
+      selectedButton.dataset.correct ===
+        'true';
+
+    selectedButton.dataset.result =
+      isCorrect ?
+        'correct' :
+        'incorrect';
+
+    const activeDescentQuestion =
+      timestampThreeQuestions[
+        descentManagementQuestionIndex
+      ];
+
+    const shouldShowVideo =
+      activeQuestionTimestamp === 9000 &&
+      activeDescentQuestion.hasVideo;
+
+    descentManagementVideo.pause();
+    descentManagementVideo.currentTime = 0;
+    descentManagementVideo.hidden =
+      !shouldShowVideo;
+
+    if (isCorrect && shouldShowVideo) {
+      const videoPlayback =
+        descentManagementVideo.play();
+
+      if (videoPlayback) {
+        videoPlayback.catch(() => {});
+      }
+    }
+  }
+
+
+  function selectDescentManagementQuestion() {
+
+    updateDescentManagementQuestion(
+      Number(
+        descentManagementQuestionSlider.value
+      ) - 1
+    );
+  }
+
+
+  function showQuestionAfterVideo() {
+
+    if (
+      activeQuestionTimestamp !== 9000 ||
+      descentManagementQuestionIndex >=
+        timestampThreeQuestions.length - 1
+    ) {
+      return;
+    }
+
+    updateDescentManagementQuestion(
+      descentManagementQuestionIndex + 1
+    );
+    questionContentChoiceButtons[0].focus();
+  }
+
+
+  function setReferenceContentAvailable(
+    isAvailable,
+    timestamp = 4000
+  ) {
+
+    referenceContentButton.disabled =
+      !isAvailable;
+
+    if (isAvailable) {
+      activeReferenceTimestamp = timestamp;
+
+      referenceContentButton.setAttribute(
+        'data-pulse',
+        'true'
+      );
+    } else {
+      activeReferenceTimestamp = null;
+
+      referenceContentButton.removeAttribute(
+        'data-pulse'
+      );
+
+      referenceContentOverlay.hidden = true;
+    }
+
+    referenceContentButton.setAttribute(
+      'aria-label',
+      isAvailable ?
+        `Open timestamp ${String(
+          forcedPauseTimes.indexOf(timestamp) + 1
+        ).padStart(2, '0')} reference material` :
+        'Reference material, not yet available'
+    );
+  }
+
+
+  function openReferenceContent() {
+
+    if (referenceContentButton.disabled) {
+      return;
+    }
+
+    referenceContentButton.removeAttribute(
+      'data-pulse'
+    );
+
+    const interactionNumber =
+      forcedPauseTimes.indexOf(
+        activeReferenceTimestamp
+      ) + 1;
+
+    const interactionLabel =
+      String(interactionNumber)
+        .padStart(2, '0');
+
+    const references =
+      timestampReferences[
+        activeReferenceTimestamp
+      ] || [];
+
+    referenceContentNumber.textContent =
+      interactionLabel;
+
+    referenceContentNumber.setAttribute(
+      'aria-label',
+      `Interaction number ${interactionLabel}`
+    );
+
+    referenceContentIntro.textContent =
+      'Consider the following:';
+
+    referenceContentList.replaceChildren();
+
+    references.forEach(reference => {
+      const item = document.createElement('li');
+      const label = document.createElement('strong');
+      const text = document.createElement('span');
+
+      label.textContent = `${reference.label}:`;
+      text.textContent = reference.text;
+
+      item.append(label, text);
+      referenceContentList.append(item);
+    });
+
+    referenceContentOverlay.hidden = false;
+    referenceContentClose.focus();
+  }
+
+
+  function closeReferenceContent() {
+
+    referenceContentOverlay.hidden = true;
+    referenceContentButton.focus();
+  }
 
 
   function setToggleState(
@@ -2506,6 +3422,180 @@ map.on('load', () => {
       }
     );
   }
+
+
+  addControlMenuBehaviour(
+    displayMenuToggle,
+    displayMenuContent
+  );
+
+  addControlMenuBehaviour(
+    flightBagMenuToggle,
+    flightBagMenuContent
+  );
+
+  flightBagWeatherButton.addEventListener(
+    'click',
+    openFlightBagWeather
+  );
+
+  flightBagWeatherClose.addEventListener(
+    'click',
+    closeFlightBagWeather
+  );
+
+  flightBagWeatherOverlay.addEventListener(
+    'click',
+    event => {
+      if (event.target === flightBagWeatherOverlay) {
+        closeFlightBagWeather();
+      }
+    }
+  );
+
+  flightBagLidoButton.addEventListener(
+    'click',
+    openFlightBagLido
+  );
+
+  flightBagLidoClose.addEventListener(
+    'click',
+    closeFlightBagLido
+  );
+
+  flightBagLidoOverlay.addEventListener(
+    'click',
+    event => {
+      if (event.target === flightBagLidoOverlay) {
+        closeFlightBagLido();
+      }
+    }
+  );
+
+  lidoPlateChoices.forEach(
+    plateButton => {
+      plateButton.addEventListener(
+        'click',
+        () => openLidoPlate(plateButton)
+      );
+    }
+  );
+
+  lidoPlateViewerClose.addEventListener(
+    'click',
+    closeLidoPlateViewer
+  );
+
+  interactionResourceButton.addEventListener(
+    'click',
+    openInteractionResource
+  );
+
+  interactionResourceViewerClose
+    .addEventListener(
+      'click',
+      closeInteractionResource
+    );
+
+  questionContentButton.addEventListener(
+    'click',
+    openQuestionContent
+  );
+
+  questionContentNext.addEventListener(
+    'click',
+    showNextQuestion
+  );
+
+  questionContentChoiceButtons.forEach(
+    button => button.addEventListener(
+      'click',
+      selectQuestionChoice
+    )
+  );
+
+  descentManagementQuestionSlider
+    .addEventListener(
+      'input',
+      selectDescentManagementQuestion
+    );
+
+  descentManagementVideo.addEventListener(
+    'ended',
+    showQuestionAfterVideo
+  );
+
+  questionContentClose.addEventListener(
+    'click',
+    closeQuestionContent
+  );
+
+  questionContentOverlay.addEventListener(
+    'click',
+    event => {
+      if (event.target === questionContentOverlay) {
+        closeQuestionContent();
+      }
+    }
+  );
+
+  referenceContentButton.addEventListener(
+    'click',
+    openReferenceContent
+  );
+
+  referenceContentClose.addEventListener(
+    'click',
+    closeReferenceContent
+  );
+
+  referenceContentOverlay.addEventListener(
+    'click',
+    event => {
+      if (event.target === referenceContentOverlay) {
+        closeReferenceContent();
+      }
+    }
+  );
+
+  document.addEventListener(
+    'keydown',
+    event => {
+
+      if (event.key !== 'Escape') {
+        return;
+      }
+
+      if (!referenceContentOverlay.hidden) {
+        closeReferenceContent();
+        return;
+      }
+
+      if (!questionContentOverlay.hidden) {
+        closeQuestionContent();
+        return;
+      }
+
+      if (!interactionResourceViewer.hidden) {
+        closeInteractionResource();
+        return;
+      }
+
+      if (!lidoPlateViewer.hidden) {
+        closeLidoPlateViewer();
+        return;
+      }
+
+      if (!flightBagLidoOverlay.hidden) {
+        closeFlightBagLido();
+        return;
+      }
+
+      if (!flightBagWeatherOverlay.hidden) {
+        closeFlightBagWeather();
+      }
+    }
+  );
 
 
   setMagentaRoutesVisible(true);
@@ -4066,6 +5156,11 @@ map.on('load', () => {
   let hasPlayed = false;
   let isPlaybackPaused = false;
   let sequenceElapsedMilliseconds = 0;
+  let activeForcedPauseTime = null;
+  let activePlaybackRunId = 0;
+  let transportSeekTarget = null;
+  let transportSeekRouteQueue = [];
+  let routeChoiceHistory = [];
 
   const simulationSpeedMultiplier =
     1.6;
@@ -4091,6 +5186,41 @@ map.on('load', () => {
     60,
     65
   ].map(seconds => seconds * 1000);
+
+  const timedInteractionContent = {
+    1000: {
+      title: 'Descent prep.',
+      text:
+        'The aircraft is commencing a standard arrival having recently been handed over to London FIR. You are at your cruise altitude of 36000ft.\n\n' +
+        'Descent preparation and briefing should be completed before top of descent, under low work load. Consider the briefing guide below - it’s worth noting the whilst the briefing is split to PM and PF points, BOTH pilots must understand the complete picture:',
+      resource: {
+        title: 'Arrival Briefing Guide',
+        src:
+          'assets/arrival-briefing-guide.png?v=20260828-1',
+        alt:
+          'Wizz Air Arrival Briefing Guide'
+      }
+    },
+    9000: {
+      title: 'Descent Management',
+      text:
+        'Sometimes, best laid plans don’t work out. Descent management can be a multi-pronged approach, meaning more than one method may be required to achieve the desired vertical flight path.\n\n' +
+        'Program the FMGC you want it, taking into account ATC and Fly guide expectations. Treat it as your script, but be ready to ad-lib when the situation changes.'
+    },
+    11600: {
+      title: 'Ice',
+      text:
+        'Ice can be a factor all year round. Use the aircraft’s systems as per the FCOM. In summary:\n\n' +
+        '• Visible moisture at or below 10 °C (TAT in flight; SAT on the ground).\n\n' +
+        '• At any time during the descent, engine A/I must be used if in visible moisture.\n\n' +
+        'Remember, it’s ANTI-ICING. Proactive use before entering an area of icing conditions is best practice.',
+      embed: {
+        title: 'Interactive anti-ice controls and ECAM display',
+        src:
+          'assets/anti-ice-training.html?v=20260828-4'
+      }
+    }
+  };
 
   let nextForcedPauseIndex = 0;
 
@@ -4259,7 +5389,21 @@ map.on('load', () => {
 
     interactionPausePanel.hidden = true;
     interactionPauseNumber.hidden = true;
+    interactionPauseKicker.hidden = false;
+    interactionPausePanel.setAttribute(
+      'data-accent',
+      'default'
+    );
+    interactionPausePanel.setAttribute(
+      'data-has-embed',
+      'false'
+    );
+    interactionEmbed.hidden = true;
+    interactionEmbed.removeAttribute('src');
+    interactionResourceButton.hidden = true;
+    interactionResourceViewer.hidden = true;
     descentModesPrompt.hidden = true;
+    delete descentModesPrompt.dataset.action;
     descentModesOverlay.hidden = true;
 
     descentModesVideo.pause();
@@ -4275,8 +5419,10 @@ map.on('load', () => {
   ) {
 
     isPlaying = false;
+    activeForcedPauseTime = null;
     setPlaybackPaused(false);
     pauseButton.disabled = true;
+    updateTransportNavigation();
 
     flightChoicePanel.hidden = true;
     nextButton.hidden = true;
@@ -4284,13 +5430,36 @@ map.on('load', () => {
     interactionPauseKicker.textContent =
       'FLIGHT COMPLETE';
 
+    interactionPauseKicker.hidden = false;
+
+    interactionPausePanel.setAttribute(
+      'data-accent',
+      'default'
+    );
+
     interactionPauseNumber.hidden = true;
 
     interactionPauseTitle.textContent =
       'Simulation paused';
 
+    interactionPausePanel.setAttribute(
+      'data-long-content',
+      'false'
+    );
+
+    interactionPausePanel.setAttribute(
+      'data-has-embed',
+      'false'
+    );
+
+    interactionEmbed.hidden = true;
+    interactionEmbed.removeAttribute('src');
+
     interactionPauseText.textContent =
       message;
+
+    interactionResourceButton.hidden = true;
+    interactionResourceViewer.hidden = true;
 
     pendingInteractionContinuation =
       onContinue;
@@ -4312,8 +5481,35 @@ map.on('load', () => {
       String(interactionNumber)
         .padStart(2, '0');
 
+    const interactionContent =
+      timedInteractionContent[pauseTime] ||
+      {};
+
+    activeForcedPauseTime = pauseTime;
     setPlaybackPaused(true);
     pauseButton.disabled = true;
+    updateTransportNavigation();
+
+    if (
+      pauseTime === 1000 ||
+      pauseTime === 9000 ||
+      pauseTime === 11600
+    ) {
+      setQuestionContentAvailable(
+        true,
+        pauseTime
+      );
+    }
+
+    if (
+      pauseTime === 4000 ||
+      pauseTime === 11600
+    ) {
+      setReferenceContentAvailable(
+        true,
+        pauseTime
+      );
+    }
 
     flightChoicePanel.hidden = true;
     nextButton.hidden = true;
@@ -4321,34 +5517,201 @@ map.on('load', () => {
     interactionPauseKicker.textContent =
       'INTERACTION POINT';
 
+    const usesMagentaStyle =
+      pauseTime === 1000 ||
+      pauseTime === 9000 ||
+      pauseTime === 11600;
+
+    interactionPauseKicker.hidden =
+      usesMagentaStyle;
+
+    interactionPausePanel.setAttribute(
+      'data-accent',
+      usesMagentaStyle ?
+        'magenta' :
+        'default'
+    );
+
     interactionPauseNumber.textContent =
       interactionLabel;
 
     interactionPauseNumber.hidden = false;
 
     interactionPauseTitle.textContent =
+      interactionContent.title ||
       formatPlaybackTime(pauseTime);
 
     interactionPauseText.textContent =
+      interactionContent.text ||
       'Select CONTINUE when you are ready to resume.';
+
+    const interactionEmbedContent =
+      interactionContent.embed;
+
+    interactionPausePanel.setAttribute(
+      'data-has-embed',
+      interactionEmbedContent ?
+        'true' :
+        'false'
+    );
+
+    interactionEmbed.hidden =
+      !interactionEmbedContent;
+
+    if (interactionEmbedContent) {
+      interactionEmbed.title =
+        interactionEmbedContent.title;
+
+      interactionEmbed.src =
+        interactionEmbedContent.src;
+    } else {
+      interactionEmbed.title =
+        'Interactive training content';
+
+      interactionEmbed.removeAttribute('src');
+    }
+
+    const interactionResource =
+      interactionContent.resource;
+
+    interactionResourceViewer.hidden = true;
+    interactionResourceButton.hidden =
+      !interactionResource;
+
+    if (interactionResource) {
+      interactionResourceThumbnail.src =
+        interactionResource.src;
+
+      interactionResourceThumbnail.alt =
+        interactionResource.alt ||
+        interactionResource.title;
+
+      interactionResourceButton.dataset
+        .resourceTitle =
+          interactionResource.title;
+
+      interactionResourceButton.dataset
+        .resourceSrc =
+          interactionResource.src;
+
+      interactionResourceButton.dataset
+        .resourceAlt =
+          interactionResource.alt ||
+          interactionResource.title;
+
+      interactionResourceButton.setAttribute(
+        'aria-label',
+        `Open ${interactionResource.title}`
+      );
+    } else {
+      interactionResourceThumbnail
+        .removeAttribute('src');
+
+      interactionResourceThumbnail.alt = '';
+
+      delete interactionResourceButton.dataset
+        .resourceTitle;
+
+      delete interactionResourceButton.dataset
+        .resourceSrc;
+
+      delete interactionResourceButton.dataset
+        .resourceAlt;
+    }
+
+    interactionPausePanel.setAttribute(
+      'data-long-content',
+      interactionContent.text ?
+        'true' :
+        'false'
+    );
 
     pendingInteractionContinuation =
       () => {
+        activeForcedPauseTime = null;
+
+        if (
+          pauseTime === 1000 ||
+          pauseTime === 9000 ||
+          pauseTime === 11600
+        ) {
+          setQuestionContentAvailable(false);
+        }
+
+        if (
+          pauseTime === 4000 ||
+          pauseTime === 11600
+        ) {
+          setReferenceContentAvailable(false);
+        }
+
         setPlaybackPaused(false);
         pauseButton.disabled = false;
         nextButton.hidden = false;
+        updateTransportNavigation();
       };
 
-    if (pauseTime === 4000) {
+    if (
+      pauseTime === 1000 ||
+      pauseTime === 4000 ||
+      pauseTime === 9000 ||
+      pauseTime === 11600
+    ) {
       interactionPausePanel.hidden = true;
-      descentModesNumber.textContent =
-        interactionLabel;
+
+      const isDescentPrep =
+        pauseTime === 1000;
+
+      const isDescentModes =
+        pauseTime === 4000;
+
+      const isIce =
+        pauseTime === 11600;
+
+      descentModesPrompt.dataset.action =
+        isDescentModes ?
+          'open-descent-modes' :
+          'open-interaction';
+
       descentModesPrompt.textContent =
-        'DESCENT MODES';
+        isDescentPrep ?
+          'DESCENT PREP' :
+          (
+            isDescentModes ?
+              'DESCENT MODES' :
+              (
+                isIce ?
+                  'ICE' :
+                  'DESCENT MANAGEMENT'
+              )
+          );
+
+      descentModesPrompt.setAttribute(
+        'aria-label',
+        isDescentPrep ?
+          'Open Descent prep interaction' :
+          (
+            isDescentModes ?
+              'Open Descent modes interaction' :
+              (
+                isIce ?
+                  'Open Ice interaction' :
+                  'Open Descent Management interaction'
+              )
+          )
+      );
+
+      if (isDescentModes) {
+        descentModesNumber.textContent =
+          interactionLabel;
+      }
+
       descentModesPrompt.hidden = false;
+      descentModesPrompt.focus();
       return;
     }
 
+    delete descentModesPrompt.dataset.action;
     descentModesPrompt.hidden = true;
     interactionPausePanel.hidden = false;
   }
@@ -4424,6 +5787,8 @@ map.on('load', () => {
         sequenceElapsedMilliseconds
       );
 
+    updateTransportNavigation();
+
     if (playbackTimer.textContent === timerText) {
       return;
     }
@@ -4436,23 +5801,160 @@ map.on('load', () => {
 
     isPlaybackPaused = isPaused;
 
+    const shouldShowPause =
+      isPlaying && !isPaused;
+
     pauseButton.setAttribute(
       'aria-pressed',
       isPaused ? 'true' : 'false'
     );
 
-    pauseButton.textContent =
-      isPaused ? 'RESUME' : 'PAUSE';
+    playbackToggleSymbol.textContent =
+      shouldShowPause ? 'Ⅱ' : '▶';
+
+    const buttonLabel =
+      shouldShowPause ?
+        'Pause simulation' :
+        'Play simulation';
+
+    pauseButton.setAttribute(
+      'aria-label',
+      buttonLabel
+    );
+
+    pauseButton.title =
+      shouldShowPause ? 'Pause' : 'Play';
   }
 
 
-  function resetPlayback() {
+  function previousForcedPauseTime() {
+
+    if (activeForcedPauseTime !== null) {
+      const activeIndex =
+        forcedPauseTimes.indexOf(
+          activeForcedPauseTime
+        );
+
+      return activeIndex > 0 ?
+        forcedPauseTimes[activeIndex - 1] :
+        null;
+    }
+
+    for (
+      let index =
+        forcedPauseTimes.length - 1;
+      index >= 0;
+      index--
+    ) {
+      if (
+        forcedPauseTimes[index] <=
+          sequenceElapsedMilliseconds
+      ) {
+        return forcedPauseTimes[index];
+      }
+    }
+
+    return null;
+  }
+
+
+  function nextForcedPauseTime() {
+
+    if (activeForcedPauseTime !== null) {
+      const activeIndex =
+        forcedPauseTimes.indexOf(
+          activeForcedPauseTime
+        );
+
+      return (
+        activeIndex >= 0 &&
+        activeIndex <
+          forcedPauseTimes.length - 1
+      ) ?
+        forcedPauseTimes[activeIndex + 1] :
+        null;
+    }
+
+    return forcedPauseTimes.find(
+      pauseTime =>
+        pauseTime >
+          sequenceElapsedMilliseconds
+    ) ?? null;
+  }
+
+
+  function updateTransportNavigation() {
+
+    previousTimestampButton.disabled =
+      previousForcedPauseTime() === null;
+
+    nextTimestampButton.disabled =
+      nextForcedPauseTime() === null;
+  }
+
+
+  function seekToForcedPause(pauseTime) {
+
+    if (
+      pauseTime === null ||
+      !forcedPauseTimes.includes(pauseTime)
+    ) {
+      return;
+    }
+
+    const savedRouteHistory =
+      routeChoiceHistory.slice();
+
+    resetPlayback({
+      preserveRouteHistory: true
+    });
+
+    routeChoiceHistory =
+      savedRouteHistory;
+
+    transportSeekTarget =
+      pauseTime;
+
+    transportSeekRouteQueue =
+      savedRouteHistory.slice();
+
+    nextForcedPauseIndex =
+      forcedPauseTimes.indexOf(
+        pauseTime
+      );
+
+    playCommonLeg({
+      isTransportReplay: true
+    });
+  }
+
+
+  function resetPlayback({
+    preserveRouteHistory = false
+  } = {}) {
 
     const firstPoint =
       flightTrack[0];
 
+    activePlaybackRunId++;
+    isPlaying = false;
+    activeForcedPauseTime = null;
+
+    transportSeekTarget = null;
+    transportSeekRouteQueue = [];
+
+    if (!preserveRouteHistory) {
+      routeChoiceHistory = [];
+    }
+
     playedFlightChoices.clear();
     nextForcedPauseIndex = 0;
+    setQuestionContentAvailable(false);
+    questionContentOverlay.hidden = true;
+    questionContentIndex = 0;
+    updateQuestionContent();
+    setReferenceContentAvailable(false);
+    referenceContentOverlay.hidden = true;
     hideFlightChoicePanel();
     hideInteractionPause();
     updateFlightChoiceButtons();
@@ -4523,7 +6025,7 @@ map.on('load', () => {
     updatePlaybackTimer();
 
     setPlaybackPaused(false);
-    pauseButton.disabled = true;
+    pauseButton.disabled = false;
 
     hasPlayed = false;
   }
@@ -4550,6 +6052,9 @@ map.on('load', () => {
     activeProfileData =
       profileData;
 
+    const playbackRunId =
+      ++activePlaybackRunId;
+
     const firstTimestamp =
       track[0].timestamp;
 
@@ -4565,6 +6070,18 @@ map.on('load', () => {
 
     const sequenceElapsedAtFlightStart =
       sequenceElapsedMilliseconds;
+
+    const playbackStartOffset =
+      transportSeekTarget === null ?
+        0 :
+        Math.min(
+          Math.max(
+            transportSeekTarget -
+              sequenceElapsedAtFlightStart,
+            0
+          ),
+          playbackDuration
+        );
 
     let pointIndex = 0;
 
@@ -4588,9 +6105,14 @@ map.on('load', () => {
     pauseButton.disabled = false;
     nextButton.disabled = true;
     nextButton.textContent = buttonText;
+    setPlaybackPaused(false);
 
 
     function frame(now) {
+
+      if (playbackRunId !== activePlaybackRunId) {
+        return;
+      }
 
       if (isPlaybackPaused) {
 
@@ -4612,7 +6134,8 @@ map.on('load', () => {
 
       const rawFlightElapsed =
         Math.min(
-          now - animationStart -
+          playbackStartOffset +
+            now - animationStart -
             pausedDuration,
           playbackDuration
         );
@@ -4799,6 +6322,14 @@ map.on('load', () => {
 
         nextForcedPauseIndex++;
 
+        if (
+          transportSeekTarget ===
+            forcedPauseTime
+        ) {
+          transportSeekTarget = null;
+          transportSeekRouteQueue = [];
+        }
+
         showTimedInteractionPause(
           forcedPauseTime
         );
@@ -4813,6 +6344,7 @@ map.on('load', () => {
 
       } else {
 
+        isPlaying = false;
         onComplete();
       }
     }
@@ -4843,6 +6375,22 @@ map.on('load', () => {
 
 
   function returnToTeltuSelection() {
+
+    if (
+      transportSeekTarget !== null &&
+      transportSeekRouteQueue.length > 0
+    ) {
+      const nextChoiceKey =
+        transportSeekRouteQueue.shift();
+
+      playSelectedFlight(
+        nextChoiceKey,
+        {
+          isTransportReplay: true
+        }
+      );
+      return;
+    }
 
     const teltuPoint =
       flightTrack[primaryTeltuIndex];
@@ -4887,6 +6435,24 @@ map.on('load', () => {
     playedFlightChoices.add(choiceKey);
     softenCompletedRoute(choiceKey);
 
+    if (transportSeekTarget !== null) {
+      const nextChoiceKey =
+        transportSeekRouteQueue.shift();
+
+      if (nextChoiceKey) {
+        playSelectedFlight(
+          nextChoiceKey,
+          {
+            isTransportReplay: true
+          }
+        );
+      } else {
+        showFlightChoicePanel();
+      }
+
+      return;
+    }
+
     isPlaying = false;
     setPlaybackPaused(false);
     pauseButton.disabled = true;
@@ -4916,14 +6482,32 @@ map.on('load', () => {
 
 
   function playSelectedFlight(
-    choiceKey
+    choiceKey,
+    {
+      isTransportReplay = false
+    } = {}
   ) {
 
     if (
       isPlaying ||
-      playedFlightChoices.has(choiceKey)
+      (
+        !isTransportReplay &&
+        playedFlightChoices.has(choiceKey)
+      )
     ) {
       return;
+    }
+
+    if (!isTransportReplay) {
+      routeChoiceHistory =
+        routeChoiceHistory.slice(
+          0,
+          playedFlightChoices.size
+        );
+
+      routeChoiceHistory.push(
+        choiceKey
+      );
     }
 
     const choice =
@@ -5093,7 +6677,23 @@ map.on('load', () => {
     'click',
     () => {
 
+      const promptAction =
+        descentModesPrompt.dataset.action;
+
       descentModesPrompt.hidden = true;
+
+      if (promptAction === 'open-interaction') {
+        interactionPausePanel.hidden = false;
+
+        if (!interactionResourceButton.hidden) {
+          interactionResourceButton.focus();
+        } else {
+          interactionContinueButton.focus();
+        }
+
+        return;
+      }
+
       descentModesOverlay.hidden = false;
 
       descentModesVideo.currentTime = 0;
@@ -5148,11 +6748,45 @@ map.on('load', () => {
     () => {
 
       if (!isPlaying) {
+        if (hasPlayed) {
+          resetPlayback();
+        }
+
+        playCommonLeg();
         return;
       }
 
       setPlaybackPaused(
         !isPlaybackPaused
+      );
+    }
+  );
+
+
+  restartButton.addEventListener(
+    'click',
+    () => {
+      resetPlayback();
+      pauseButton.focus();
+    }
+  );
+
+
+  previousTimestampButton.addEventListener(
+    'click',
+    () => {
+      seekToForcedPause(
+        previousForcedPauseTime()
+      );
+    }
+  );
+
+
+  nextTimestampButton.addEventListener(
+    'click',
+    () => {
+      seekToForcedPause(
+        nextForcedPauseTime()
       );
     }
   );
