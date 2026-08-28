@@ -6,12 +6,12 @@
   <title>TCAS Threat Sequence</title>
   <style>
     :root {
-      color-scheme: dark;
-      --white: #f4f6f6;
+      color-scheme: light;
+      --white: #152638;
       --amber: #f0a72f;
       --red: #ed3d3d;
-      --muted: #8f999c;
-      --panel: #070909;
+      --muted: #66727b;
+      --panel: #ffffff;
       --edge: #343a3c;
     }
 
@@ -29,9 +29,7 @@
     .tcas {
       min-height: 100vh;
       display: grid;
-      grid-template-rows: 1fr auto;
       place-items: center;
-      gap: clamp(0.75rem, 3vh, 1.25rem);
       padding: clamp(1rem, 5vw, 1.75rem);
       overflow: hidden;
     }
@@ -115,37 +113,6 @@
 
     .progress span.active { background: currentColor; border-color: currentColor; }
 
-    .controls {
-      display: flex;
-      justify-content: center;
-      gap: 0.65rem;
-      width: 100%;
-    }
-
-    button {
-      min-width: 6.6rem;
-      min-height: 2.65rem;
-      padding: 0.55rem 1rem;
-      border: 1px solid var(--edge);
-      border-radius: 0.35rem;
-      background: #111516;
-      color: var(--white);
-      font: 700 0.78rem/1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      cursor: pointer;
-    }
-
-    button:hover { background: #1a1f20; border-color: #60696c; }
-    button:focus-visible { outline: 2px solid var(--white); outline-offset: 3px; }
-    button:active { transform: translateY(1px); }
-
-    @media (max-height: 290px) {
-      .tcas { grid-template-columns: 1fr auto; grid-template-rows: 1fr; }
-      .display { min-height: 0; }
-      .controls { flex-direction: column; }
-    }
-
     @media (prefers-reduced-motion: reduce) {
       .contact, .symbol { transition: none; }
     }
@@ -165,11 +132,6 @@
         <span class="active"></span><span></span><span></span><span></span>
       </div>
     </section>
-
-    <div class="controls" aria-label="Animation controls">
-      <button type="button" id="pause" aria-pressed="false">Pause</button>
-      <button type="button" id="restart">Restart</button>
-    </div>
   </main>
 
   <script>
@@ -187,11 +149,8 @@
       const symbol = document.getElementById("symbol");
       const altitude = document.getElementById("altitude");
       const caption = document.getElementById("caption");
-      const pauseButton = document.getElementById("pause");
-      const restartButton = document.getElementById("restart");
       const dots = [...document.querySelectorAll("#progress span")];
       let index = 0;
-      let paused = false;
       let timer;
 
       function render() {
@@ -205,30 +164,12 @@
 
       function schedule() {
         window.clearTimeout(timer);
-        if (!paused) {
-          timer = window.setTimeout(() => {
-            index = (index + 1) % stages.length;
-            render();
-            schedule();
-          }, intervalMs);
-        }
+        timer = window.setTimeout(() => {
+          index = (index + 1) % stages.length;
+          render();
+          schedule();
+        }, intervalMs);
       }
-
-      pauseButton.addEventListener("click", () => {
-        paused = !paused;
-        pauseButton.textContent = paused ? "Resume" : "Pause";
-        pauseButton.setAttribute("aria-pressed", String(paused));
-        schedule();
-      });
-
-      restartButton.addEventListener("click", () => {
-        index = 0;
-        paused = false;
-        pauseButton.textContent = "Pause";
-        pauseButton.setAttribute("aria-pressed", "false");
-        render();
-        schedule();
-      });
 
       document.addEventListener("visibilitychange", () => {
         if (document.hidden) window.clearTimeout(timer);
