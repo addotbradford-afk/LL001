@@ -2540,6 +2540,11 @@ map.on('load', () => {
     'Does selecting anti-icing ON affect the descent profile?'
   ];
 
+  const timestampFiveQuestions = [
+    'Are we permitted to fly in airspace with TCAS inoperative?',
+    'What are your actions if a resolution advisory becomes active?'
+  ];
+
   const timestampReferences = {
     4000: [
       {
@@ -2877,7 +2882,11 @@ map.on('load', () => {
     const questions =
       activeQuestionTimestamp === 11600 ?
         timestampFourQuestions :
-        timestampOneQuestions;
+        (
+          activeQuestionTimestamp === 12100 ?
+            timestampFiveQuestions :
+            timestampOneQuestions
+        );
 
     const questionNumber =
       questionContentIndex + 1;
@@ -3047,10 +3056,17 @@ map.on('load', () => {
     const isIceQuestion =
       activeQuestionTimestamp === 11600;
 
+    const isTcasQuestion =
+      activeQuestionTimestamp === 12100;
+
     questionContentNumber.textContent =
       isDescentManagementQuestion ?
         '03' :
-        (isIceQuestion ? '04' : '01');
+        (
+          isIceQuestion ?
+            '04' :
+            (isTcasQuestion ? '05' : '01')
+        );
 
     questionContentNumber.setAttribute(
       'aria-label',
@@ -3059,14 +3075,22 @@ map.on('load', () => {
         (
           isIceQuestion ?
             'Interaction number 04' :
-            'Interaction number 01'
+            (
+              isTcasQuestion ?
+                'Interaction number 05' :
+                'Interaction number 01'
+            )
         )
     );
 
     questionContentTitle.textContent =
       isDescentManagementQuestion ?
         'Descent Management' :
-        (isIceQuestion ? 'Ice' : 'Questions');
+        (
+          isIceQuestion ?
+            'Ice' :
+            (isTcasQuestion ? 'TCAS' : 'Questions')
+        );
 
     questionContentNext.hidden =
       isDescentManagementQuestion ||
@@ -3116,7 +3140,11 @@ map.on('load', () => {
     const questions =
       activeQuestionTimestamp === 11600 ?
         timestampFourQuestions :
-        timestampOneQuestions;
+        (
+          activeQuestionTimestamp === 12100 ?
+            timestampFiveQuestions :
+            timestampOneQuestions
+        );
 
     questionContentIndex =
       (
@@ -5219,6 +5247,14 @@ map.on('load', () => {
         src:
           'assets/anti-ice-training.html?v=20260828-4'
       }
+    },
+    12100: {
+      title: 'TCAS',
+      text:
+        'Congested airspace needs careful management and Traffic Alerts or Resolution Advisories can occur frequently. Always survey the airspace as you navigate your way.\n\n' +
+        'Consider:\n\n' +
+        '• Adjusting the map range to view nearby aircraft.\n\n' +
+        '• Adhering to rates of climb or descent when nearing your selected FCU level.'
     }
   };
 
@@ -5493,7 +5529,8 @@ map.on('load', () => {
     if (
       pauseTime === 1000 ||
       pauseTime === 9000 ||
-      pauseTime === 11600
+      pauseTime === 11600 ||
+      pauseTime === 12100
     ) {
       setQuestionContentAvailable(
         true,
@@ -5520,7 +5557,8 @@ map.on('load', () => {
     const usesMagentaStyle =
       pauseTime === 1000 ||
       pauseTime === 9000 ||
-      pauseTime === 11600;
+      pauseTime === 11600 ||
+      pauseTime === 12100;
 
     interactionPauseKicker.hidden =
       usesMagentaStyle;
@@ -5633,7 +5671,8 @@ map.on('load', () => {
         if (
           pauseTime === 1000 ||
           pauseTime === 9000 ||
-          pauseTime === 11600
+          pauseTime === 11600 ||
+          pauseTime === 12100
         ) {
           setQuestionContentAvailable(false);
         }
@@ -5655,7 +5694,8 @@ map.on('load', () => {
       pauseTime === 1000 ||
       pauseTime === 4000 ||
       pauseTime === 9000 ||
-      pauseTime === 11600
+      pauseTime === 11600 ||
+      pauseTime === 12100
     ) {
       interactionPausePanel.hidden = true;
 
@@ -5667,6 +5707,9 @@ map.on('load', () => {
 
       const isIce =
         pauseTime === 11600;
+
+      const isTcas =
+        pauseTime === 12100;
 
       descentModesPrompt.dataset.action =
         isDescentModes ?
@@ -5682,7 +5725,11 @@ map.on('load', () => {
               (
                 isIce ?
                   'ICE' :
-                  'DESCENT MANAGEMENT'
+                  (
+                    isTcas ?
+                      'TCAS' :
+                      'DESCENT MANAGEMENT'
+                  )
               )
           );
 
@@ -5696,7 +5743,11 @@ map.on('load', () => {
               (
                 isIce ?
                   'Open Ice interaction' :
-                  'Open Descent Management interaction'
+                  (
+                    isTcas ?
+                      'Open TCAS interaction' :
+                      'Open Descent Management interaction'
+                  )
               )
           )
       );
