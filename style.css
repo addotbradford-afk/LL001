@@ -479,6 +479,18 @@ body {
   display: none;
 }
 
+#interactionPausePanel[data-has-embed='true'][data-embed-size='compact'] {
+  width: min(620px, calc(100vw - 32px));
+}
+
+#interactionPausePanel[data-embed-size='compact']
+  #interactionEmbed {
+  width: min(440px, 100%);
+  height: min(300px, 38vh);
+  margin-right: auto;
+  margin-left: auto;
+}
+
 .interaction-resource-button {
   display: grid;
   width: 146px;

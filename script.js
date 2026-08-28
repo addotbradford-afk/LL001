@@ -5254,7 +5254,14 @@ map.on('load', () => {
         'Congested airspace needs careful management and Traffic Alerts or Resolution Advisories can occur frequently. Always survey the airspace as you navigate your way.\n\n' +
         'Consider:\n\n' +
         '• Adjusting the map range to view nearby aircraft.\n\n' +
-        '• Adhering to rates of climb or descent when nearing your selected FCU level.'
+        '• Adhering to rates of climb or descent when nearing your selected FCU level.',
+      embed: {
+        title: 'Interactive TCAS threat sequence',
+        src:
+          'assets/tcas-threat-sequence.html?v=20260828-1',
+        placement: 'below',
+        size: 'compact'
+      }
     }
   };
 
@@ -5434,6 +5441,10 @@ map.on('load', () => {
       'data-has-embed',
       'false'
     );
+    interactionPausePanel.setAttribute(
+      'data-embed-size',
+      'default'
+    );
     interactionEmbed.hidden = true;
     interactionEmbed.removeAttribute('src');
     interactionResourceButton.hidden = true;
@@ -5486,6 +5497,10 @@ map.on('load', () => {
     interactionPausePanel.setAttribute(
       'data-has-embed',
       'false'
+    );
+    interactionPausePanel.setAttribute(
+      'data-embed-size',
+      'default'
     );
 
     interactionEmbed.hidden = true;
@@ -5592,6 +5607,29 @@ map.on('load', () => {
         'true' :
         'false'
     );
+
+    interactionPausePanel.setAttribute(
+      'data-embed-size',
+      interactionEmbedContent &&
+        interactionEmbedContent.size ===
+          'compact' ?
+        'compact' :
+        'default'
+    );
+
+    if (
+      interactionEmbedContent &&
+      interactionEmbedContent.placement ===
+        'below'
+    ) {
+      interactionPauseText.after(
+        interactionEmbed
+      );
+    } else {
+      interactionPauseTitle.after(
+        interactionEmbed
+      );
+    }
 
     interactionEmbed.hidden =
       !interactionEmbedContent;
