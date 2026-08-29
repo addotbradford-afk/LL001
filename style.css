@@ -857,19 +857,24 @@ body {
   gap: 8px;
 }
 
+#flightChoicePanel {
+  width: min(520px, calc(100vw - 32px));
+}
+
 .flight-choice-button {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 8px 13px;
+  align-items: center;
   box-sizing: border-box;
   width: 100%;
-  padding: 12px 14px;
+  padding: 10px;
 
   color: #8d3f6a;
   background: rgba(198, 95, 152, 0.07);
   border: 1px solid rgba(198, 95, 152, 0.32);
   border-radius: 7px;
 
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.07em;
   text-align: left;
   cursor: pointer;
   transition:
@@ -877,6 +882,61 @@ body {
     border-color 140ms ease,
     opacity 140ms ease,
     transform 140ms ease;
+}
+
+.flight-choice-callsign {
+  display: grid;
+  place-items: center;
+  min-height: 34px;
+  padding: 4px 8px;
+
+  color: #ffffff;
+  background: #a9487e;
+  border-radius: 5px;
+
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 0.055em;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.flight-choice-instruction {
+  color: #4d5662;
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    monospace;
+  font-size: 11px;
+  font-style: italic;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+}
+
+.flight-choice-instruction::before {
+  content: '“';
+  color: #a9487e;
+}
+
+.flight-choice-instruction::after {
+  content: '”';
+  color: #a9487e;
+}
+
+.flight-choice-completion {
+  grid-column: 1 / -1;
+  justify-self: end;
+  padding-right: 2px;
+
+  color: #7c838b;
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: 0.12em;
 }
 
 .flight-choice-button:hover:not(:disabled) {
@@ -897,6 +957,16 @@ body {
   opacity: 0.38;
   cursor: default;
   filter: saturate(0.35);
+}
+
+@media (max-width: 480px) {
+  .flight-choice-button {
+    grid-template-columns: 1fr;
+  }
+
+  .flight-choice-callsign {
+    justify-self: start;
+  }
 }
 
 /* TIMED INTERACTIVE CONTENT */

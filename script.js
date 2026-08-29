@@ -5330,8 +5330,11 @@ map.on('load', () => {
     one: {
       key: 'one',
       button: flightChoiceOne,
+      callSign: 'Wizz Go 1A',
+      instruction:
+        'Fly heading 010°, expect vectors downwind right.',
       label:
-        '1 - Wizz Go 1A, Fly heading 010°, expect vectors downwind right',
+        'Wizz Go 1A — Fly heading 010°, expect vectors downwind right',
       title: scenario.title,
       track: flightTrack,
       coordinates: routeCoordinates,
@@ -5348,8 +5351,11 @@ map.on('load', () => {
     two: {
       key: 'two',
       button: flightChoiceTwo,
+      callSign: 'Wizz Go 1B',
+      instruction:
+        'Continue standard arrival.',
       label:
-        '2 - WizzGo 1B, standard arrival',
+        'Wizz Go 1B — Continue standard arrival',
       title: secondFlight.title,
       track: secondFlightTrack,
       coordinates: secondRouteCoordinates,
@@ -5370,8 +5376,11 @@ map.on('load', () => {
     three: {
       key: 'three',
       button: flightChoiceThree,
+      callSign: 'Wizz Go 1C',
+      instruction:
+        'Reduce speed, expect vectors.',
       label:
-        '1C - Wizz Go 1C, reduce speed, expect vectors',
+        'Wizz Go 1C — Reduce speed, expect vectors',
       title: thirdFlight.title,
       track: thirdFlightTrack,
       coordinates: thirdRouteCoordinates,
@@ -5412,13 +5421,52 @@ map.on('load', () => {
             'false'
         );
 
-        choice.button.textContent =
-          choice.label +
-          (
-            hasPlayedChoice ?
-              ' · COMPLETE' :
-              ''
-          );
+        const callSign =
+          document.createElement('span');
+
+        callSign.className =
+          'flight-choice-callsign';
+
+        callSign.textContent =
+          choice.callSign;
+
+        const instruction =
+          document.createElement('span');
+
+        instruction.className =
+          'flight-choice-instruction';
+
+        instruction.textContent =
+          choice.instruction;
+
+        choice.button.replaceChildren(
+          callSign,
+          instruction
+        );
+
+        if (hasPlayedChoice) {
+          const completion =
+            document.createElement('span');
+
+          completion.className =
+            'flight-choice-completion';
+
+          completion.textContent =
+            'COMPLETE';
+
+          choice.button.append(completion);
+        }
+
+        choice.button.setAttribute(
+          'aria-label',
+          `${choice.callSign}. ` +
+            `${choice.instruction}` +
+            (
+              hasPlayedChoice ?
+                ' Complete.' :
+                ''
+            )
+        );
       });
   }
 
