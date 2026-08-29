@@ -5330,7 +5330,8 @@ map.on('load', () => {
     one: {
       key: 'one',
       button: flightChoiceOne,
-      label: `ROUTE 1 · ${scenario.title}`,
+      label:
+        '1 - Wizz Go 1A, Fly heading 010°, expect vectors downwind right',
       title: scenario.title,
       track: flightTrack,
       coordinates: routeCoordinates,
@@ -5347,7 +5348,8 @@ map.on('load', () => {
     two: {
       key: 'two',
       button: flightChoiceTwo,
-      label: `ROUTE 2 · ${secondFlight.title}`,
+      label:
+        '2 - WizzGo 1B, standard arrival',
       title: secondFlight.title,
       track: secondFlightTrack,
       coordinates: secondRouteCoordinates,
@@ -5369,7 +5371,7 @@ map.on('load', () => {
       key: 'three',
       button: flightChoiceThree,
       label:
-        `ROUTE 3 · ${thirdFlight.title} · GO-AROUND`,
+        '1C - Wizz Go 1C, reduce speed, expect vectors',
       title: thirdFlight.title,
       track: thirdFlightTrack,
       coordinates: thirdRouteCoordinates,
@@ -5810,10 +5812,6 @@ map.on('load', () => {
     allFlightsComplete = false
   ) {
 
-    const remainingChoices =
-      Object.keys(flightChoices).length -
-      playedFlightChoices.size;
-
     isPlaying = false;
     setPlaybackPaused(false);
     pauseButton.disabled = true;
@@ -5822,12 +5820,13 @@ map.on('load', () => {
 
     hideInteractionPause();
 
+    flightChoiceText.hidden =
+      !allFlightsComplete;
+
     flightChoiceText.textContent =
       allFlightsComplete ?
-        'All three routes have been completed.' :
-        `${remainingChoices} route${
-          remainingChoices === 1 ? '' : 's'
-        } available. Choose the next outcome.`;
+        'All three ATC options have been completed.' :
+        '';
 
     flightChoicePanel.hidden = false;
 
