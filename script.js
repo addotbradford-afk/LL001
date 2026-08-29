@@ -5258,7 +5258,7 @@ map.on('load', () => {
       embed: {
         title: 'Interactive TCAS threat sequence',
         src:
-          'assets/tcas-threat-sequence.html?v=20260829-3',
+          'assets/tcas-threat-sequence.html?v=20260829-4',
         placement: 'below',
         size: 'compact'
       }
