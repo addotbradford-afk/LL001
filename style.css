@@ -479,12 +479,16 @@ body {
   display: none;
 }
 
-#interactionPausePanel[data-has-embed='true'][data-embed-size='compact'] {
+#interactionPausePanel:not([hidden])[data-has-embed='true'][data-embed-size='compact'] {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 230px;
   gap: 16px 20px;
   align-items: center;
   width: min(720px, calc(100vw - 32px));
+}
+
+#interactionPausePanel[hidden] {
+  display: none;
 }
 
 #interactionPausePanel[data-embed-size='compact']
