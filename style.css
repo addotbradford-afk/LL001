@@ -2038,8 +2038,8 @@ body {
   position: relative;
   z-index: 2;
   display: block;
-  width: min(1180px, calc(100vw - 24px));
-  height: min(820px, calc(100vh - 88px));
+  width: min(885px, calc(100vw - 24px));
+  height: min(615px, calc(100vh - 88px));
 
   background: #050708;
   border: 0;
