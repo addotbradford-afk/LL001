@@ -452,6 +452,34 @@ body {
   white-space: pre-line;
 }
 
+#interactionPauseText p {
+  margin: 0 0 12px;
+}
+
+#interactionPauseText p:last-child {
+  margin-bottom: 0;
+}
+
+#interactionPauseText .interaction-summary-list {
+  margin: 0 0 14px;
+  padding-left: 22px;
+  white-space: normal;
+}
+
+#interactionPauseText .interaction-summary-list li {
+  margin-bottom: 8px;
+  font-style: italic;
+}
+
+#interactionPauseText .interaction-summary-list li:last-child {
+  margin-bottom: 0;
+}
+
+#interactionPauseText strong {
+  color: #303944;
+  font-weight: 800;
+}
+
 #interactionPausePanel[data-long-content='true'] {
   width: min(540px, calc(100vw - 32px));
   text-align: left;

@@ -5486,11 +5486,14 @@ map.on('load', () => {
     },
     11600: {
       title: 'Ice',
-      text:
-        'Ice can be a factor all year round. Use the aircraft’s systems as per the FCOM. In summary:\n\n' +
-        '• Visible moisture at or below 10 °C (TAT in flight; SAT on the ground).\n\n' +
-        '• At any time during the descent, engine A/I must be used if in visible moisture.\n\n' +
-        'Remember, it’s ANTI-ICING. Proactive use before entering an area of icing conditions is best practice.',
+      html:
+        '<p>Ice can be a factor all year round. Use the aircraft’s systems as per the FCOM. In summary:</p>' +
+        '<ul class="interaction-summary-list">' +
+          '<li>Visible moisture at or below 10 °C (TAT in flight; SAT on the ground).</li>' +
+          '<li>At any time during the descent, engine A/I must be used if in visible moisture.</li>' +
+          '<li>Make a system selection and <strong>CONFIRM</strong> on the ECAM that it has been actioned.</li>' +
+        '</ul>' +
+        '<p>Remember, it’s <strong>ANTI-ICING</strong>. Proactive use before entering an area of icing conditions is best practice.</p>',
       embed: {
         title: 'Interactive anti-ice controls and ECAM display',
         src:
@@ -5917,9 +5920,14 @@ map.on('load', () => {
       interactionContent.title ||
       formatPlaybackTime(pauseTime);
 
-    interactionPauseText.textContent =
-      interactionContent.text ||
-      'Select CONTINUE when you are ready to resume.';
+    if (interactionContent.html) {
+      interactionPauseText.innerHTML =
+        interactionContent.html;
+    } else {
+      interactionPauseText.textContent =
+        interactionContent.text ||
+        'Select CONTINUE when you are ready to resume.';
+    }
 
     const interactionEmbedContent =
       interactionContent.embed;
@@ -6055,7 +6063,8 @@ map.on('load', () => {
 
     interactionPausePanel.setAttribute(
       'data-long-content',
-      interactionContent.text ?
+      interactionContent.text ||
+      interactionContent.html ?
         'true' :
         'false'
     );
