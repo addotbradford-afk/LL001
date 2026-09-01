@@ -5262,6 +5262,12 @@ map.on('load', () => {
         placement: 'below',
         size: 'compact'
       }
+    },
+    13500: {
+      title: 'Situation awareness',
+      text:
+        'We’ve now been given a significant reduction in our track miles. All pilots can face a reduction in SA for a variety of reasons. It’s important to slow down your thoughts, take a breath and move forward logically.\n\n' +
+        'Let’s look at some ways we can update our mental model.'
     }
   };
 
@@ -5623,7 +5629,8 @@ map.on('load', () => {
       pauseTime === 1000 ||
       pauseTime === 9000 ||
       pauseTime === 11600 ||
-      pauseTime === 12100;
+      pauseTime === 12100 ||
+      pauseTime === 13500;
 
     interactionPauseKicker.hidden =
       usesMagentaStyle;
@@ -5783,7 +5790,8 @@ map.on('load', () => {
       pauseTime === 4000 ||
       pauseTime === 9000 ||
       pauseTime === 11600 ||
-      pauseTime === 12100
+      pauseTime === 12100 ||
+      pauseTime === 13500
     ) {
       interactionPausePanel.hidden = true;
 
@@ -5798,6 +5806,9 @@ map.on('load', () => {
 
       const isTcas =
         pauseTime === 12100;
+
+      const isSituationAwareness =
+        pauseTime === 13500;
 
       descentModesPrompt.dataset.action =
         isDescentModes ?
@@ -5816,7 +5827,11 @@ map.on('load', () => {
                   (
                     isTcas ?
                       'TCAS' :
-                      'DESCENT MANAGEMENT'
+                      (
+                        isSituationAwareness ?
+                          'SITUATION AWARENESS' :
+                          'DESCENT MANAGEMENT'
+                      )
                   )
               )
           );
@@ -5834,7 +5849,11 @@ map.on('load', () => {
                   (
                     isTcas ?
                       'Open TCAS interaction' :
-                      'Open Descent Management interaction'
+                      (
+                        isSituationAwareness ?
+                          'Open Situation awareness interaction' :
+                          'Open Descent Management interaction'
+                      )
                   )
               )
           )
