@@ -3085,7 +3085,7 @@ map.on('load', () => {
 
     questionContentTitle.textContent =
       isDescentManagementQuestion ?
-        'Descent Management' :
+        'Situation awareness' :
         (
           isIceQuestion ?
             'Ice' :
@@ -5230,10 +5230,10 @@ map.on('load', () => {
       }
     },
     9000: {
-      title: 'Descent Management',
+      title: 'Situation awareness',
       text:
-        'Sometimes, best laid plans don’t work out. Descent management can be a multi-pronged approach, meaning more than one method may be required to achieve the desired vertical flight path.\n\n' +
-        'Program the FMGC you want it, taking into account ATC and Fly guide expectations. Treat it as your script, but be ready to ad-lib when the situation changes.'
+        'We’ve now been given a significant reduction in our track miles. All pilots can face a reduction in SA for a variety of reasons. It’s important to slow down your thoughts, take a breath and move forward logically.\n\n' +
+        'Let’s look at some ways we can update our mental model.'
     },
     11600: {
       title: 'Ice',
@@ -5816,7 +5816,7 @@ map.on('load', () => {
                   (
                     isTcas ?
                       'TCAS' :
-                      'DESCENT MANAGEMENT'
+                      'SITUATION AWARENESS'
                   )
               )
           );
@@ -5834,7 +5834,7 @@ map.on('load', () => {
                   (
                     isTcas ?
                       'Open TCAS interaction' :
-                      'Open Descent Management interaction'
+                      'Open Situation awareness interaction'
                   )
               )
           )
