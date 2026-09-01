@@ -2570,16 +2570,27 @@ map.on('load', () => {
     'What are your actions if a resolution advisory becomes active?'
   ];
 
-  const timestampSixQuestion = {
-    text:
-      'How many track miles do you think remain?',
-    answers: [
-      'Around 50 track miles',
-      'Around 60 Miles',
-      'Around 80 track miles'
-    ],
-    correctAnswerIndex: 1
-  };
+  const timestampSixQuestions = [
+    {
+      text:
+        'How many track miles do you think remain?',
+      answers: [
+        'Around 50 track miles',
+        'Around 60 Miles',
+        'Around 80 track miles'
+      ],
+      correctAnswerIndex: 1
+    },
+    {
+      text:
+        'Given we are level at FL190, are we high or low on profile?',
+      answers: [
+        'Possibly On or below profile',
+        'Below Profile'
+      ],
+      correctAnswerIndex: 0
+    }
+  ];
 
   const timestampReferences = {
     4000: [
@@ -3029,6 +3040,8 @@ map.on('load', () => {
 
     questionContentChoiceButtons.forEach(
       (button, answerIndex) => {
+        button.hidden = false;
+
         button.textContent =
           question.answers[answerIndex];
 
@@ -3088,15 +3101,30 @@ map.on('load', () => {
 
   function updateSituationAwarenessQuestion() {
 
+    const question =
+      timestampSixQuestions[
+        questionContentIndex
+      ];
+
     questionContentText.textContent =
-      timestampSixQuestion.text;
+      question.text;
 
     questionContentChoiceButtons.forEach(
       (button, answerIndex) => {
+        const answer =
+          question.answers[answerIndex];
+
+        button.hidden = !answer;
+
+        if (!answer) {
+          button.textContent = '';
+          delete button.dataset.correct;
+          delete button.dataset.result;
+          return;
+        }
+
         button.textContent =
-          timestampSixQuestion.answers[
-            answerIndex
-          ];
+          answer;
 
         button.setAttribute(
           'aria-pressed',
@@ -3107,7 +3135,7 @@ map.on('load', () => {
 
         if (
           answerIndex ===
-            timestampSixQuestion
+            question
               .correctAnswerIndex
         ) {
           button.dataset.correct = 'true';
@@ -3118,20 +3146,31 @@ map.on('load', () => {
     );
 
     questionContentProgressText.textContent =
-      'QUESTION 1 OF 1';
+      `QUESTION ${
+        questionContentIndex + 1
+      } OF ${timestampSixQuestions.length}`;
 
     questionContentProgress.setAttribute(
       'aria-valuenow',
-      '1'
+      String(questionContentIndex + 1)
     );
 
     questionContentProgress.setAttribute(
       'aria-valuemax',
-      '1'
+      String(timestampSixQuestions.length)
     );
 
     questionContentProgressFill.style.width =
-      '100%';
+      `${(
+        (questionContentIndex + 1) /
+        timestampSixQuestions.length
+      ) * 100}%`;
+
+    questionContentNext.textContent =
+      questionContentIndex ===
+        timestampSixQuestions.length - 1 ?
+        'BACK TO FIRST' :
+        'NEXT QUESTION';
 
     descentManagementVideo.pause();
     descentManagementVideo.currentTime = 0;
@@ -3259,8 +3298,7 @@ map.on('load', () => {
 
     questionContentNext.hidden =
       isDescentManagementQuestion ||
-      isIceQuestion ||
-      isSituationAwarenessQuestion;
+      isIceQuestion;
 
     questionContentProgressRow.hidden = false;
 
@@ -3276,6 +3314,7 @@ map.on('load', () => {
     if (isDescentManagementQuestion) {
       updateDescentManagementQuestion(0);
     } else if (isSituationAwarenessQuestion) {
+      questionContentIndex = 0;
       updateSituationAwarenessQuestion();
     } else {
       descentManagementVideo.pause();
@@ -3304,6 +3343,16 @@ map.on('load', () => {
 
 
   function showNextQuestion() {
+
+    if (activeQuestionTimestamp === 13500) {
+      questionContentIndex =
+        (
+          questionContentIndex + 1
+        ) % timestampSixQuestions.length;
+
+      updateSituationAwarenessQuestion();
+      return;
+    }
 
     const questions =
       activeQuestionTimestamp === 11600 ?
