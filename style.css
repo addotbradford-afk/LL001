@@ -2009,6 +2009,7 @@ body {
 }
 
 .interaction-tool-viewer-stage {
+  position: relative;
   display: grid;
   place-items: center;
   min-width: 0;
@@ -2018,7 +2019,24 @@ body {
   overscroll-behavior: contain;
 }
 
+#interactionToolViewerLoading {
+  position: absolute;
+  z-index: 1;
+
+  color: #aeb9c1;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+#interactionToolViewer[data-ready='true']
+  #interactionToolViewerLoading {
+  display: none;
+}
+
 #interactionToolViewerFrame {
+  position: relative;
+  z-index: 2;
   display: block;
   width: min(1180px, calc(100vw - 24px));
   height: min(820px, calc(100vh - 88px));
@@ -2027,6 +2045,13 @@ body {
   border: 0;
   border-radius: 10px;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+#interactionToolViewer[data-ready='true']
+  #interactionToolViewerFrame {
+  opacity: 1;
 }
 
 .display-toggle {

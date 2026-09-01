@@ -2924,6 +2924,11 @@ map.on('load', () => {
     interactionToolViewerFrame.src =
       toolSource;
 
+    interactionToolViewer.setAttribute(
+      'data-ready',
+      'false'
+    );
+
     interactionToolViewer.hidden = false;
     interactionToolViewerClose.focus();
   }
@@ -2932,6 +2937,10 @@ map.on('load', () => {
   function closeInteractionTool() {
 
     interactionToolViewer.hidden = true;
+    interactionToolViewer.setAttribute(
+      'data-ready',
+      'false'
+    );
     interactionToolViewerFrame.removeAttribute(
       'src'
     );
@@ -3598,6 +3607,23 @@ map.on('load', () => {
   interactionToolViewerClose.addEventListener(
     'click',
     closeInteractionTool
+  );
+
+  interactionToolViewerFrame.addEventListener(
+    'load',
+    () => {
+      if (
+        !interactionToolViewer.hidden &&
+        interactionToolViewerFrame.hasAttribute(
+          'src'
+        )
+      ) {
+        interactionToolViewer.setAttribute(
+          'data-ready',
+          'true'
+        );
+      }
+    }
   );
 
   questionContentButton.addEventListener(
@@ -5351,7 +5377,7 @@ map.on('load', () => {
       tool: {
         title: 'FMGC Trainer',
         src:
-          'assets/fmgc-trainer/index.html?v=20260901-1',
+          'assets/fmgc-trainer/index.html?v=20260901-2',
         label: 'OPEN FMGC TRAINER'
       }
     }

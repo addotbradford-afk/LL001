@@ -20,7 +20,7 @@
   <!-- LINE LOGIC STYLES -->
   <link
     rel="stylesheet"
-    href="style.css?v=20260901-28"
+    href="style.css?v=20260901-29"
   >
 </head>
 
@@ -458,10 +458,17 @@
     </div>
 
     <div class="interaction-tool-viewer-stage">
+      <div
+        id="interactionToolViewerLoading"
+        role="status"
+      >
+        LOADING FMGC TRAINER…
+      </div>
+
       <iframe
         id="interactionToolViewerFrame"
         title="Interactive Trainer"
-        sandbox="allow-scripts"
+        sandbox="allow-scripts allow-same-origin"
         referrerpolicy="no-referrer"
       ></iframe>
     </div>
@@ -905,7 +912,7 @@
   <script src="third-flight.js?v=20260823-1"></script>
 
   <!-- LINE LOGIC MAP ENGINE -->
-  <script src="script.js?v=20260901-39"></script>
+  <script src="script.js?v=20260901-40"></script>
 
 </body>
 
