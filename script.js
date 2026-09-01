@@ -5482,7 +5482,7 @@ map.on('load', () => {
       title: 'Descent Management',
       text:
         'Sometimes, best laid plans don’t work out. Descent management can be a multi-pronged approach, meaning more than one method may be required to achieve the desired vertical flight path.\n\n' +
-        'Program the FMGC you want it, taking into account ATC and Fly guide expectations. Treat it as your script, but be ready to ad-lib when the situation changes.'
+        'Program the FMGC how you want it, taking into account ATC and Fly guide expectations. Treat it as your script, but be ready to ad-lib when the situation changes.'
     },
     11600: {
       title: 'Ice',
