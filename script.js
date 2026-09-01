@@ -2570,6 +2570,17 @@ map.on('load', () => {
     'What are your actions if a resolution advisory becomes active?'
   ];
 
+  const timestampSixQuestion = {
+    text:
+      'How many track miles do you think remain?',
+    answers: [
+      'Around 50 track miles',
+      'Around 60 Miles',
+      'Around 80 track miles'
+    ],
+    correctAnswerIndex: 1
+  };
+
   const timestampReferences = {
     4000: [
       {
@@ -3075,6 +3086,59 @@ map.on('load', () => {
   }
 
 
+  function updateSituationAwarenessQuestion() {
+
+    questionContentText.textContent =
+      timestampSixQuestion.text;
+
+    questionContentChoiceButtons.forEach(
+      (button, answerIndex) => {
+        button.textContent =
+          timestampSixQuestion.answers[
+            answerIndex
+          ];
+
+        button.setAttribute(
+          'aria-pressed',
+          'false'
+        );
+
+        delete button.dataset.result;
+
+        if (
+          answerIndex ===
+            timestampSixQuestion
+              .correctAnswerIndex
+        ) {
+          button.dataset.correct = 'true';
+        } else {
+          delete button.dataset.correct;
+        }
+      }
+    );
+
+    questionContentProgressText.textContent =
+      'QUESTION 1 OF 1';
+
+    questionContentProgress.setAttribute(
+      'aria-valuenow',
+      '1'
+    );
+
+    questionContentProgress.setAttribute(
+      'aria-valuemax',
+      '1'
+    );
+
+    questionContentProgressFill.style.width =
+      '100%';
+
+    descentManagementVideo.pause();
+    descentManagementVideo.currentTime = 0;
+    descentManagementVideo.hidden = true;
+  }
+
+
   function setQuestionContentAvailable(
     isAvailable,
     timestamp = 1000
@@ -3133,13 +3197,28 @@ map.on('load', () => {
     const isTcasQuestion =
       activeQuestionTimestamp === 12100;
 
+    const isSituationAwarenessQuestion =
+      activeQuestionTimestamp === 13500;
+
+    const isMultipleChoiceQuestion =
+      isDescentManagementQuestion ||
+      isSituationAwarenessQuestion;
+
     questionContentNumber.textContent =
       isDescentManagementQuestion ?
         '03' :
         (
           isIceQuestion ?
             '04' :
-            (isTcasQuestion ? '05' : '01')
+            (
+              isTcasQuestion ?
+                '05' :
+                (
+                  isSituationAwarenessQuestion ?
+                    '06' :
+                    '01'
+                )
+            )
         );
 
     questionContentNumber.setAttribute(
@@ -3152,7 +3231,11 @@ map.on('load', () => {
             (
               isTcasQuestion ?
                 'Interaction number 05' :
-                'Interaction number 01'
+                (
+                  isSituationAwarenessQuestion ?
+                    'Interaction number 06' :
+                    'Interaction number 01'
+                )
             )
         )
     );
@@ -3163,12 +3246,21 @@ map.on('load', () => {
         (
           isIceQuestion ?
             'Ice' :
-            (isTcasQuestion ? 'TCAS' : 'Questions')
+            (
+              isTcasQuestion ?
+                'TCAS' :
+                (
+                  isSituationAwarenessQuestion ?
+                    'Situation awareness' :
+                    'Questions'
+                )
+            )
         );
 
     questionContentNext.hidden =
       isDescentManagementQuestion ||
-      isIceQuestion;
+      isIceQuestion ||
+      isSituationAwarenessQuestion;
 
     questionContentProgressRow.hidden = false;
 
@@ -3179,10 +3271,12 @@ map.on('load', () => {
       !isDescentManagementQuestion;
 
     questionContentChoices.hidden =
-      !isDescentManagementQuestion;
+      !isMultipleChoiceQuestion;
 
     if (isDescentManagementQuestion) {
       updateDescentManagementQuestion(0);
+    } else if (isSituationAwarenessQuestion) {
+      updateSituationAwarenessQuestion();
     } else {
       descentManagementVideo.pause();
       descentManagementVideo.currentTime = 0;
@@ -3193,7 +3287,7 @@ map.on('load', () => {
 
     questionContentOverlay.hidden = false;
 
-    if (isDescentManagementQuestion) {
+    if (isMultipleChoiceQuestion) {
       questionContentChoiceButtons[0].focus();
     } else {
       questionContentNext.focus();
@@ -5723,7 +5817,8 @@ map.on('load', () => {
       pauseTime === 1000 ||
       pauseTime === 9000 ||
       pauseTime === 11600 ||
-      pauseTime === 12100
+      pauseTime === 12100 ||
+      pauseTime === 13500
     ) {
       setQuestionContentAvailable(
         true,
@@ -5924,7 +6019,8 @@ map.on('load', () => {
           pauseTime === 1000 ||
           pauseTime === 9000 ||
           pauseTime === 11600 ||
-          pauseTime === 12100
+          pauseTime === 12100 ||
+          pauseTime === 13500
         ) {
           setQuestionContentAvailable(false);
         }
