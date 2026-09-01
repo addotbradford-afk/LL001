@@ -2300,6 +2300,11 @@ map.on('load', () => {
       'interactionResourceThumbnail'
     );
 
+  const interactionToolButton =
+    document.getElementById(
+      'interactionToolButton'
+    );
+
   const interactionContinueButton =
     document.getElementById(
       'interactionContinueButton'
@@ -2423,6 +2428,26 @@ map.on('load', () => {
   const interactionResourceViewerClose =
     document.getElementById(
       'interactionResourceViewerClose'
+    );
+
+  const interactionToolViewer =
+    document.getElementById(
+      'interactionToolViewer'
+    );
+
+  const interactionToolViewerTitle =
+    document.getElementById(
+      'interactionToolViewerTitle'
+    );
+
+  const interactionToolViewerFrame =
+    document.getElementById(
+      'interactionToolViewerFrame'
+    );
+
+  const interactionToolViewerClose =
+    document.getElementById(
+      'interactionToolViewerClose'
     );
 
   const questionContentButton =
@@ -2873,6 +2898,46 @@ map.on('load', () => {
 
     if (!interactionResourceButton.hidden) {
       interactionResourceButton.focus();
+    }
+  }
+
+
+  function openInteractionTool() {
+
+    const toolSource =
+      interactionToolButton.dataset.toolSrc;
+
+    if (!toolSource) {
+      return;
+    }
+
+    const toolTitle =
+      interactionToolButton.dataset.toolTitle ||
+      'Interactive Trainer';
+
+    interactionToolViewerTitle.textContent =
+      toolTitle;
+
+    interactionToolViewerFrame.title =
+      toolTitle;
+
+    interactionToolViewerFrame.src =
+      toolSource;
+
+    interactionToolViewer.hidden = false;
+    interactionToolViewerClose.focus();
+  }
+
+
+  function closeInteractionTool() {
+
+    interactionToolViewer.hidden = true;
+    interactionToolViewerFrame.removeAttribute(
+      'src'
+    );
+
+    if (!interactionToolButton.hidden) {
+      interactionToolButton.focus();
     }
   }
 
@@ -3525,6 +3590,16 @@ map.on('load', () => {
       closeInteractionResource
     );
 
+  interactionToolButton.addEventListener(
+    'click',
+    openInteractionTool
+  );
+
+  interactionToolViewerClose.addEventListener(
+    'click',
+    closeInteractionTool
+  );
+
   questionContentButton.addEventListener(
     'click',
     openQuestionContent
@@ -3606,6 +3681,11 @@ map.on('load', () => {
 
       if (!interactionResourceViewer.hidden) {
         closeInteractionResource();
+        return;
+      }
+
+      if (!interactionToolViewer.hidden) {
+        closeInteractionTool();
         return;
       }
 
@@ -5267,7 +5347,13 @@ map.on('load', () => {
       title: 'Situation awareness',
       text:
         'We’ve now been given a significant reduction in our track miles. All pilots can face a reduction in SA for a variety of reasons. It’s important to slow down your thoughts, take a breath and move forward logically.\n\n' +
-        'Let’s look at some ways we can update our mental model.'
+        'Let’s look at some ways we can update our mental model.',
+      tool: {
+        title: 'FMGC Trainer',
+        src:
+          'assets/fmgc-trainer/index.html?v=20260901-1',
+        label: 'OPEN FMGC TRAINER'
+      }
     }
   };
 
@@ -5505,6 +5591,11 @@ map.on('load', () => {
     interactionEmbed.removeAttribute('src');
     interactionResourceButton.hidden = true;
     interactionResourceViewer.hidden = true;
+    interactionToolButton.hidden = true;
+    interactionToolViewer.hidden = true;
+    interactionToolViewerFrame.removeAttribute(
+      'src'
+    );
     descentModesPrompt.hidden = true;
     delete descentModesPrompt.dataset.action;
     descentModesOverlay.hidden = true;
@@ -5567,6 +5658,11 @@ map.on('load', () => {
 
     interactionResourceButton.hidden = true;
     interactionResourceViewer.hidden = true;
+    interactionToolButton.hidden = true;
+    interactionToolViewer.hidden = true;
+    interactionToolViewerFrame.removeAttribute(
+      'src'
+    );
 
     pendingInteractionContinuation =
       onContinue;
@@ -5750,6 +5846,41 @@ map.on('load', () => {
 
       delete interactionResourceButton.dataset
         .resourceAlt;
+    }
+
+    const interactionTool =
+      interactionContent.tool;
+
+    interactionToolViewer.hidden = true;
+    interactionToolViewerFrame.removeAttribute(
+      'src'
+    );
+    interactionToolButton.hidden =
+      !interactionTool;
+
+    if (interactionTool) {
+      interactionToolButton.firstChild.textContent =
+        `${interactionTool.label || 'OPEN INTERACTIVE TRAINER'} `;
+
+      interactionToolButton.dataset.toolTitle =
+        interactionTool.title;
+
+      interactionToolButton.dataset.toolSrc =
+        interactionTool.src;
+
+      interactionToolButton.setAttribute(
+        'aria-label',
+        `Open ${interactionTool.title}`
+      );
+    } else {
+      interactionToolButton.firstChild.textContent =
+        'OPEN INTERACTIVE TRAINER ';
+
+      delete interactionToolButton.dataset
+        .toolTitle;
+
+      delete interactionToolButton.dataset
+        .toolSrc;
     }
 
     interactionPausePanel.setAttribute(
@@ -6842,6 +6973,8 @@ map.on('load', () => {
 
         if (!interactionResourceButton.hidden) {
           interactionResourceButton.focus();
+        } else if (!interactionToolButton.hidden) {
+          interactionToolButton.focus();
         } else {
           interactionContinueButton.focus();
         }

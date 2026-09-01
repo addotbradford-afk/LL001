@@ -20,7 +20,7 @@
   <!-- LINE LOGIC STYLES -->
   <link
     rel="stylesheet"
-    href="style.css?v=20260829-27"
+    href="style.css?v=20260901-28"
   >
 </head>
 
@@ -145,6 +145,16 @@
         draggable="false"
       >
       <span>OPEN BRIEFING GUIDE</span>
+    </button>
+
+    <button
+      id="interactionToolButton"
+      class="interaction-tool-button"
+      type="button"
+      hidden
+    >
+      OPEN FMGC TRAINER
+      <span aria-hidden="true">&#8594;</span>
     </button>
 
     <button
@@ -422,6 +432,38 @@
         alt=""
         draggable="false"
       >
+    </div>
+  </section>
+
+  <!-- FULL-SCREEN INTERACTIVE TRAINER VIEWER -->
+  <section
+    id="interactionToolViewer"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="interactionToolViewerTitle"
+    hidden
+  >
+    <div class="interaction-tool-viewer-header">
+      <h2 id="interactionToolViewerTitle">
+        Interactive Trainer
+      </h2>
+
+      <button
+        id="interactionToolViewerClose"
+        type="button"
+        aria-label="Close interactive trainer"
+      >
+        ×
+      </button>
+    </div>
+
+    <div class="interaction-tool-viewer-stage">
+      <iframe
+        id="interactionToolViewerFrame"
+        title="Interactive Trainer"
+        sandbox="allow-scripts"
+        referrerpolicy="no-referrer"
+      ></iframe>
     </div>
   </section>
 
@@ -863,7 +905,7 @@
   <script src="third-flight.js?v=20260823-1"></script>
 
   <!-- LINE LOGIC MAP ENGINE -->
-  <script src="script.js?v=20260901-38"></script>
+  <script src="script.js?v=20260901-39"></script>
 
 </body>
 
