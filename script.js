@@ -5520,7 +5520,7 @@ map.on('load', () => {
       tool: {
         title: 'FMGC Trainer',
         src:
-          'assets/fmgc-trainer/index.html?v=20260901-2',
+          'assets/fmgc-trainer/index.html?v=20260901-3',
         label: 'OPEN FMGC TRAINER'
       }
     }
