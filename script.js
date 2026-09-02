@@ -5469,7 +5469,7 @@ map.on('load', () => {
       title: 'Descent prep.',
       text:
         'The aircraft is commencing a standard arrival having recently been handed over to London FIR. You are at your cruise altitude of 36000ft.\n\n' +
-        'Descent preparation and briefing should be completed before top of descent, under low work load. Consider the briefing guide below - it’s worth noting the whilst the briefing is split to PM and PF points, BOTH pilots must understand the complete picture:',
+        'Descent preparation and briefing should be completed before top of descent, under low work load. Consider the briefing guide below - it’s worth noting that whilst the briefing is split to PM and PF points, BOTH pilots must understand the complete picture:',
       resource: {
         title: 'Arrival Briefing Guide',
         src:
