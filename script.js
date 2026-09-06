@@ -2592,6 +2592,12 @@ map.on('load', () => {
     }
   ];
 
+  const timestampSevenQuestions = [
+    'What would the slowest speed in clean configuration?',
+    'What vertical mode would be appropriate for a descent of 1000ft?',
+    'What vertical mode would be appropriate for a descent of 4000ft?'
+  ];
+
   const timestampReferences = {
     4000: [
       {
@@ -3285,12 +3291,16 @@ map.on('load', () => {
   function updateQuestionContent() {
 
     const questions =
-      activeQuestionTimestamp === 11600 ?
-        timestampFourQuestions :
+      activeQuestionTimestamp === 16000 ?
+        timestampSevenQuestions :
         (
-          activeQuestionTimestamp === 12100 ?
-            timestampFiveQuestions :
-            timestampOneQuestions
+          activeQuestionTimestamp === 11600 ?
+            timestampFourQuestions :
+            (
+              activeQuestionTimestamp === 12100 ?
+                timestampFiveQuestions :
+                timestampOneQuestions
+            )
         );
 
     const questionNumber =
@@ -3548,6 +3558,9 @@ map.on('load', () => {
     const isSituationAwarenessQuestion =
       activeQuestionTimestamp === 13500;
 
+    const isHowLookingQuestion =
+      activeQuestionTimestamp === 16000;
+
     const isMultipleChoiceQuestion =
       isDescentManagementQuestion ||
       isSituationAwarenessQuestion;
@@ -3564,7 +3577,11 @@ map.on('load', () => {
                 (
                   isSituationAwarenessQuestion ?
                     '06' :
-                    '01'
+                    (
+                      isHowLookingQuestion ?
+                        '07' :
+                        '01'
+                    )
                 )
             )
         );
@@ -3582,7 +3599,11 @@ map.on('load', () => {
                 (
                   isSituationAwarenessQuestion ?
                     'Interaction number 06' :
-                    'Interaction number 01'
+                    (
+                      isHowLookingQuestion ?
+                        'Interaction number 07' :
+                        'Interaction number 01'
+                    )
                 )
             )
         )
@@ -3600,7 +3621,11 @@ map.on('load', () => {
                 (
                   isSituationAwarenessQuestion ?
                     'Situation awareness' :
-                    'Questions'
+                    (
+                      isHowLookingQuestion ?
+                        'How’s it looking?' :
+                        'Questions'
+                    )
                 )
             )
         );
@@ -3664,12 +3689,16 @@ map.on('load', () => {
     }
 
     const questions =
-      activeQuestionTimestamp === 11600 ?
-        timestampFourQuestions :
+      activeQuestionTimestamp === 16000 ?
+        timestampSevenQuestions :
         (
-          activeQuestionTimestamp === 12100 ?
-            timestampFiveQuestions :
-            timestampOneQuestions
+          activeQuestionTimestamp === 11600 ?
+            timestampFourQuestions :
+            (
+              activeQuestionTimestamp === 12100 ?
+                timestampFiveQuestions :
+                timestampOneQuestions
+            )
         );
 
     questionContentIndex =
@@ -5837,6 +5866,16 @@ map.on('load', () => {
           'assets/fmgc-trainer/index.html?v=20260901-3',
         label: 'OPEN FMGC TRAINER'
       }
+    },
+    16000: {
+      title: 'How’s it looking?',
+      text:
+        'We have only been given a gradual descent by ATC from FL190, down to FL170. With track miles reducing, it can often feel as though we are beginning to get high on profile.\n\n' +
+        'This is natural, and often the case due to dense traffic flows beneath. Lets go back to ideas mentioned previously:\n\n' +
+        '1 - READ THE ROOM - if aircraft are only being given small descents, use an appropriate rate of descent. If ATC give you a something in excess of 3000 or 4000, it’s likely the limit of their sector, and a rate of descent at least equal to your ideal preferred descent path should be targeted.\n\n' +
+        '2 - Be aware of other aircraft - high closure rates with aircraft nearby can cause traffic advisory alerts or resolution advisories.\n\n' +
+        'If you aren’t constrained by an ATC speed instruction, consider slowing down during small descents or level segments. Don’t rely on this however. Busy airspace may require aircraft to stream in at controlled rates.\n\n' +
+        'Keep updating your mental profile. Lets take a look at 2 useful techniques -'
     }
   };
 
@@ -6181,7 +6220,8 @@ map.on('load', () => {
       pauseTime === 9000 ||
       pauseTime === 11600 ||
       pauseTime === 12100 ||
-      pauseTime === 13500
+      pauseTime === 13500 ||
+      pauseTime === 16000
     ) {
       setQuestionContentAvailable(
         true,
@@ -6210,7 +6250,8 @@ map.on('load', () => {
       pauseTime === 9000 ||
       pauseTime === 11600 ||
       pauseTime === 12100 ||
-      pauseTime === 13500;
+      pauseTime === 13500 ||
+      pauseTime === 16000;
 
     interactionPauseKicker.hidden =
       usesMagentaStyle;
@@ -6389,7 +6430,8 @@ map.on('load', () => {
           pauseTime === 9000 ||
           pauseTime === 11600 ||
           pauseTime === 12100 ||
-          pauseTime === 13500
+          pauseTime === 13500 ||
+          pauseTime === 16000
         ) {
           setQuestionContentAvailable(false);
         }
@@ -6413,7 +6455,8 @@ map.on('load', () => {
       pauseTime === 9000 ||
       pauseTime === 11600 ||
       pauseTime === 12100 ||
-      pauseTime === 13500
+      pauseTime === 13500 ||
+      pauseTime === 16000
     ) {
       interactionPausePanel.hidden = true;
 
@@ -6431,6 +6474,9 @@ map.on('load', () => {
 
       const isSituationAwareness =
         pauseTime === 13500;
+
+      const isHowLooking =
+        pauseTime === 16000;
 
       descentModesPrompt.dataset.action =
         isDescentModes ?
@@ -6452,7 +6498,11 @@ map.on('load', () => {
                       (
                         isSituationAwareness ?
                           'SITUATION AWARENESS' :
-                          'DESCENT MANAGEMENT'
+                          (
+                            isHowLooking ?
+                              'HOW’S IT LOOKING?' :
+                              'DESCENT MANAGEMENT'
+                          )
                       )
                   )
               )
@@ -6474,7 +6524,11 @@ map.on('load', () => {
                       (
                         isSituationAwareness ?
                           'Open Situation awareness interaction' :
-                          'Open Descent Management interaction'
+                          (
+                            isHowLooking ?
+                              'Open How’s it looking interaction' :
+                              'Open Descent Management interaction'
+                          )
                       )
                   )
               )
