@@ -2598,6 +2598,11 @@ map.on('load', () => {
     'What vertical mode would be appropriate for a descent of 4000ft (on a HDG)?'
   ];
 
+  const timestampEightQuestions = [
+    'When do we give the Cabin the command for start of descent?',
+    'When do we give the Cabin the command to prepare for landing?'
+  ];
+
   const timestampReferences = {
     4000: [
       {
@@ -3291,15 +3296,19 @@ map.on('load', () => {
   function updateQuestionContent() {
 
     const questions =
-      activeQuestionTimestamp === 16000 ?
-        timestampSevenQuestions :
+      activeQuestionTimestamp === 20500 ?
+        timestampEightQuestions :
         (
-          activeQuestionTimestamp === 11600 ?
-            timestampFourQuestions :
+          activeQuestionTimestamp === 16000 ?
+            timestampSevenQuestions :
             (
-              activeQuestionTimestamp === 12100 ?
-                timestampFiveQuestions :
-                timestampOneQuestions
+              activeQuestionTimestamp === 11600 ?
+                timestampFourQuestions :
+                (
+                  activeQuestionTimestamp === 12100 ?
+                    timestampFiveQuestions :
+                    timestampOneQuestions
+                )
             )
         );
 
@@ -3561,6 +3570,9 @@ map.on('load', () => {
     const isHowLookingQuestion =
       activeQuestionTimestamp === 16000;
 
+    const isProcessQuestion =
+      activeQuestionTimestamp === 20500;
+
     const isMultipleChoiceQuestion =
       isDescentManagementQuestion ||
       isSituationAwarenessQuestion;
@@ -3580,7 +3592,11 @@ map.on('load', () => {
                     (
                       isHowLookingQuestion ?
                         '07' :
-                        '01'
+                        (
+                          isProcessQuestion ?
+                            '08' :
+                            '01'
+                        )
                     )
                 )
             )
@@ -3602,7 +3618,11 @@ map.on('load', () => {
                     (
                       isHowLookingQuestion ?
                         'Interaction number 07' :
-                        'Interaction number 01'
+                        (
+                          isProcessQuestion ?
+                            'Interaction number 08' :
+                            'Interaction number 01'
+                        )
                     )
                 )
             )
@@ -3624,7 +3644,11 @@ map.on('load', () => {
                     (
                       isHowLookingQuestion ?
                         'How’s it looking?' :
-                        'Questions'
+                        (
+                          isProcessQuestion ?
+                            'Process' :
+                            'Questions'
+                        )
                     )
                 )
             )
@@ -3689,15 +3713,19 @@ map.on('load', () => {
     }
 
     const questions =
-      activeQuestionTimestamp === 16000 ?
-        timestampSevenQuestions :
+      activeQuestionTimestamp === 20500 ?
+        timestampEightQuestions :
         (
-          activeQuestionTimestamp === 11600 ?
-            timestampFourQuestions :
+          activeQuestionTimestamp === 16000 ?
+            timestampSevenQuestions :
             (
-              activeQuestionTimestamp === 12100 ?
-                timestampFiveQuestions :
-                timestampOneQuestions
+              activeQuestionTimestamp === 11600 ?
+                timestampFourQuestions :
+                (
+                  activeQuestionTimestamp === 12100 ?
+                    timestampFiveQuestions :
+                    timestampOneQuestions
+                )
             )
         );
 
@@ -5876,6 +5904,15 @@ map.on('load', () => {
         '2 - Be aware of other aircraft - high closure rates with aircraft nearby can cause traffic advisory alerts or resolution advisories.\n\n' +
         'If you aren’t constrained by an ATC speed instruction, consider slowing down during small descents or level segments. Don’t rely on this however. Busy airspace may require aircraft to stream in at controlled rates.\n\n' +
         'Keep updating your mental profile. Lets take a look at 2 useful techniques -'
+    },
+    20500: {
+      title: 'Process',
+      text:
+        'However busy you feel remember, as a crew there are always things to do to keep the aircraft making progress.\n\n' +
+        '1 - Passing FL150 - securing the cabin for landing\n\n' +
+        '2 - FL100 flows\n\n' +
+        '3 - Activation of approach phase. This is done manually (PROG -> Activate APR phase) or flying through (D)\n\n' +
+        '4 - Approach checks - when cleared to descend to an altitude.'
     }
   };
 
@@ -6221,7 +6258,8 @@ map.on('load', () => {
       pauseTime === 11600 ||
       pauseTime === 12100 ||
       pauseTime === 13500 ||
-      pauseTime === 16000
+      pauseTime === 16000 ||
+      pauseTime === 20500
     ) {
       setQuestionContentAvailable(
         true,
@@ -6251,7 +6289,8 @@ map.on('load', () => {
       pauseTime === 11600 ||
       pauseTime === 12100 ||
       pauseTime === 13500 ||
-      pauseTime === 16000;
+      pauseTime === 16000 ||
+      pauseTime === 20500;
 
     interactionPauseKicker.hidden =
       usesMagentaStyle;
@@ -6431,7 +6470,8 @@ map.on('load', () => {
           pauseTime === 11600 ||
           pauseTime === 12100 ||
           pauseTime === 13500 ||
-          pauseTime === 16000
+          pauseTime === 16000 ||
+          pauseTime === 20500
         ) {
           setQuestionContentAvailable(false);
         }
@@ -6456,7 +6496,8 @@ map.on('load', () => {
       pauseTime === 11600 ||
       pauseTime === 12100 ||
       pauseTime === 13500 ||
-      pauseTime === 16000
+      pauseTime === 16000 ||
+      pauseTime === 20500
     ) {
       interactionPausePanel.hidden = true;
 
@@ -6477,6 +6518,9 @@ map.on('load', () => {
 
       const isHowLooking =
         pauseTime === 16000;
+
+      const isProcess =
+        pauseTime === 20500;
 
       descentModesPrompt.dataset.action =
         isDescentModes ?
@@ -6501,7 +6545,11 @@ map.on('load', () => {
                           (
                             isHowLooking ?
                               'HOW’S IT LOOKING?' :
-                              'DESCENT MANAGEMENT'
+                              (
+                                isProcess ?
+                                  'PROCESS' :
+                                  'DESCENT MANAGEMENT'
+                              )
                           )
                       )
                   )
@@ -6527,7 +6575,11 @@ map.on('load', () => {
                           (
                             isHowLooking ?
                               'Open How’s it looking interaction' :
-                              'Open Descent Management interaction'
+                              (
+                                isProcess ?
+                                  'Open Process interaction' :
+                                  'Open Descent Management interaction'
+                              )
                           )
                       )
                   )
