@@ -20,7 +20,7 @@
   <!-- LINE LOGIC STYLES -->
   <link
     rel="stylesheet"
-    href="style.css?v=20260902-31"
+    href="style.css?v=20260906-32"
   >
 </head>
 
@@ -834,6 +834,16 @@
     id="transportControls"
     aria-label="Simulation playback"
   >
+    <button
+      id="transportDragHandle"
+      class="transport-drag-handle"
+      type="button"
+      aria-label="Move playback controls"
+      title="Drag to move playback controls; double-click to reset"
+    >
+      <span aria-hidden="true">⠿</span>
+    </button>
+
     <output
       id="playbackTimer"
       class="stage-status-visually-hidden"
@@ -912,7 +922,7 @@
   <script src="third-flight.js?v=20260823-1"></script>
 
   <!-- LINE LOGIC MAP ENGINE -->
-  <script src="script.js?v=20260902-46"></script>
+  <script src="script.js?v=20260906-47"></script>
 
 </body>
 

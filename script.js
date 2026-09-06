@@ -2720,6 +2720,16 @@ map.on('load', () => {
   const playbackTimer =
     document.getElementById('playbackTimer');
 
+  const transportControls =
+    document.getElementById(
+      'transportControls'
+    );
+
+  const transportDragHandle =
+    document.getElementById(
+      'transportDragHandle'
+    );
+
   const pfdPanel =
     document.getElementById('pfdPanel');
 
@@ -2806,6 +2816,305 @@ map.on('load', () => {
       button,
       content,
       false
+    );
+  }
+
+
+  function addMovableTransportBehaviour() {
+
+    const storageKey =
+      'lineLogicTransportPosition';
+
+    const screenMargin = 8;
+    let dragOffsetX = 0;
+    let dragOffsetY = 0;
+    let savedPosition = null;
+
+
+    function readSavedPosition() {
+
+      try {
+        const storedPosition =
+          JSON.parse(
+            localStorage.getItem(storageKey)
+          );
+
+        if (
+          Number.isFinite(storedPosition?.x) &&
+          Number.isFinite(storedPosition?.y)
+        ) {
+          return storedPosition;
+        }
+      } catch (error) {
+        return null;
+      }
+
+      return null;
+    }
+
+
+    function savePosition() {
+
+      if (!savedPosition) {
+        return;
+      }
+
+      try {
+        localStorage.setItem(
+          storageKey,
+          JSON.stringify(savedPosition)
+        );
+      } catch (error) {
+        // The controls still move when storage is unavailable.
+      }
+    }
+
+
+    function positionTransport(
+      requestedLeft,
+      requestedTop,
+      shouldSave = false
+    ) {
+
+      const controlBounds =
+        transportControls.getBoundingClientRect();
+
+      const maximumLeft =
+        Math.max(
+          screenMargin,
+          window.innerWidth -
+            controlBounds.width -
+            screenMargin
+        );
+
+      const maximumTop =
+        Math.max(
+          screenMargin,
+          window.innerHeight -
+            controlBounds.height -
+            screenMargin
+        );
+
+      const left =
+        Math.min(
+          Math.max(requestedLeft, screenMargin),
+          maximumLeft
+        );
+
+      const top =
+        Math.min(
+          Math.max(requestedTop, screenMargin),
+          maximumTop
+        );
+
+      transportControls.style.left =
+        `${left}px`;
+
+      transportControls.style.top =
+        `${top}px`;
+
+      transportControls.style.bottom = 'auto';
+      transportControls.style.transform = 'none';
+
+      savedPosition = {
+        x:
+          (left + controlBounds.width / 2) /
+          window.innerWidth,
+        y:
+          (top + controlBounds.height / 2) /
+          window.innerHeight
+      };
+
+      if (shouldSave) {
+        savePosition();
+      }
+    }
+
+
+    function positionFromSavedRatio() {
+
+      if (!savedPosition) {
+        return;
+      }
+
+      const controlBounds =
+        transportControls.getBoundingClientRect();
+
+      positionTransport(
+        savedPosition.x * window.innerWidth -
+          controlBounds.width / 2,
+        savedPosition.y * window.innerHeight -
+          controlBounds.height / 2
+      );
+    }
+
+
+    function resetTransportPosition() {
+
+      savedPosition = null;
+
+      transportControls.style.removeProperty(
+        'left'
+      );
+
+      transportControls.style.removeProperty(
+        'top'
+      );
+
+      transportControls.style.removeProperty(
+        'bottom'
+      );
+
+      transportControls.style.removeProperty(
+        'transform'
+      );
+
+      try {
+        localStorage.removeItem(storageKey);
+      } catch (error) {
+        // The default position is restored regardless.
+      }
+    }
+
+
+    transportDragHandle.addEventListener(
+      'pointerdown',
+      event => {
+
+        if (
+          event.pointerType === 'mouse' &&
+          event.button !== 0
+        ) {
+          return;
+        }
+
+        const controlBounds =
+          transportControls.getBoundingClientRect();
+
+        dragOffsetX =
+          event.clientX - controlBounds.left;
+
+        dragOffsetY =
+          event.clientY - controlBounds.top;
+
+        transportControls.classList.add(
+          'is-dragging'
+        );
+
+        transportDragHandle.setPointerCapture(
+          event.pointerId
+        );
+
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    );
+
+
+    transportDragHandle.addEventListener(
+      'pointermove',
+      event => {
+
+        if (
+          !transportDragHandle.hasPointerCapture(
+            event.pointerId
+          )
+        ) {
+          return;
+        }
+
+        positionTransport(
+          event.clientX - dragOffsetX,
+          event.clientY - dragOffsetY
+        );
+
+        event.preventDefault();
+      }
+    );
+
+
+    function finishTransportDrag(event) {
+
+      if (
+        transportDragHandle.hasPointerCapture(
+          event.pointerId
+        )
+      ) {
+        transportDragHandle.releasePointerCapture(
+          event.pointerId
+        );
+      }
+
+      transportControls.classList.remove(
+        'is-dragging'
+      );
+
+      savePosition();
+    }
+
+
+    transportDragHandle.addEventListener(
+      'pointerup',
+      finishTransportDrag
+    );
+
+    transportDragHandle.addEventListener(
+      'pointercancel',
+      finishTransportDrag
+    );
+
+    transportDragHandle.addEventListener(
+      'dblclick',
+      resetTransportPosition
+    );
+
+    transportDragHandle.addEventListener(
+      'keydown',
+      event => {
+
+        if (event.key === 'Home') {
+          resetTransportPosition();
+          event.preventDefault();
+          return;
+        }
+
+        const direction = {
+          ArrowLeft: [-1, 0],
+          ArrowRight: [1, 0],
+          ArrowUp: [0, -1],
+          ArrowDown: [0, 1]
+        }[event.key];
+
+        if (!direction) {
+          return;
+        }
+
+        const controlBounds =
+          transportControls.getBoundingClientRect();
+
+        const movement = event.shiftKey ? 40 : 12;
+
+        positionTransport(
+          controlBounds.left +
+            direction[0] * movement,
+          controlBounds.top +
+            direction[1] * movement,
+          true
+        );
+
+        event.preventDefault();
+      }
+    );
+
+    window.addEventListener(
+      'resize',
+      positionFromSavedRatio
+    );
+
+    savedPosition = readSavedPosition();
+
+    requestAnimationFrame(
+      positionFromSavedRatio
     );
   }
 
@@ -3678,6 +3987,8 @@ map.on('load', () => {
     flightBagMenuToggle,
     flightBagMenuContent
   );
+
+  addMovableTransportBehaviour();
 
   flightBagWeatherButton.addEventListener(
     'click',

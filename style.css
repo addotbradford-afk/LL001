@@ -2234,6 +2234,47 @@ body {
   backdrop-filter: blur(8px);
 }
 
+#transportControls.is-dragging {
+  user-select: none;
+}
+
+.transport-drag-handle {
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: 25px;
+  height: 42px;
+  padding: 0;
+
+  color: #9a7a8c;
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 22px;
+  line-height: 1;
+  cursor: grab;
+  touch-action: none;
+}
+
+.transport-drag-handle:hover,
+.transport-drag-handle:focus-visible {
+  color: #8d3f6a;
+  background: rgba(198, 95, 152, 0.1);
+}
+
+.transport-drag-handle:focus-visible {
+  outline: 3px solid rgba(198, 95, 152, 0.42);
+  outline-offset: 2px;
+}
+
+#transportControls.is-dragging
+  .transport-drag-handle {
+  color: #8d3f6a;
+  cursor: grabbing;
+}
+
 .transport-button {
   display: grid;
   place-items: center;
@@ -2467,6 +2508,11 @@ body {
     bottom: 14px;
     gap: 5px;
     padding: 6px;
+  }
+
+  .transport-drag-handle {
+    width: 22px;
+    height: 40px;
   }
 
   .transport-button {
