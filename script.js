@@ -2593,9 +2593,9 @@ map.on('load', () => {
   ];
 
   const timestampSevenQuestions = [
-    'What would the slowest speed in clean configuration?',
-    'What vertical mode would be appropriate for a descent of 1000ft?',
-    'What vertical mode would be appropriate for a descent of 4000ft?'
+    'What would be the slowest speed in clean configuration?',
+    'What vertical mode would be appropriate for a descent of 1000ft (on a HDG)?',
+    'What vertical mode would be appropriate for a descent of 4000ft (on a HDG)?'
   ];
 
   const timestampReferences = {
