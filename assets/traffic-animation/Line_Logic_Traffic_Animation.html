@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Line Logic — Traffic Compression</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --page: #f6f8fa;
+      --panel: #e7f5fb;
+      --sea-top: #dceff7;
+      --sea-bottom: #f1faff;
+      --land-top: #f3f7f4;
+      --land-bottom: #fcfdfb;
+      --coast: #9ecfe1;
+      --coast-soft: #cfe8f1;
+      --text: #31424a;
+      --muted: #70838c;
+      --guide: #718792;
+      --white-plane: #ffffff;
+      --white-plane-stroke: #5c7079;
+      --magenta: #d1007d;
+      --magenta-dark: #8e0056;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      min-height: 100%;
+      margin: 0;
+      background: var(--page);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+      padding: 18px;
+    }
+
+    .animation-shell {
+      width: min(92vw, 680px);
+    }
+
+    .stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border: 1px solid rgba(70, 100, 112, 0.18);
+      border-radius: 18px;
+      background: var(--panel);
+      box-shadow: 0 12px 32px rgba(55, 78, 87, 0.10);
+    }
+
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding-top: 12px;
+    }
+
+    button {
+      min-height: 42px;
+      padding: 0 16px;
+      border: 1px solid rgba(70, 100, 112, 0.25);
+      border-radius: 10px;
+      background: white;
+      color: var(--text);
+      font: inherit;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    button:hover { background: #f9fbfc; }
+    button:focus-visible { outline: 3px solid rgba(209, 0, 125, 0.25); outline-offset: 2px; }
+
+    .plane-label {
+      font-size: 14px;
+      font-weight: 700;
+      fill: var(--text);
+      letter-spacing: 0.2px;
+    }
+
+    .speed-label {
+      font-size: 12px;
+      fill: var(--muted);
+    }
+
+    .spacing-label {
+      font-size: 11px;
+      fill: var(--guide);
+    }
+
+    .rear-spacing-label {
+      font-size: 11px;
+      fill: var(--magenta-dark);
+    }
+
+    .clean .controls { display: none; }
+    .clean body {
+      width: 100vw;
+      height: 100vh;
+      min-height: 0;
+      padding: 0;
+      overflow: hidden;
+      background: transparent;
+    }
+    .clean .animation-shell { width: min(100vw, 100vh); }
+    .clean .stage { border: 0; border-radius: 0; box-shadow: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .controls::before {
+        content: "Reduced-motion mode";
+        align-self: center;
+        color: var(--muted);
+        font-size: 13px;
+        margin-right: 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="animation-shell" aria-label="Line Logic traffic compression animation">
+    <div class="stage">
+      <svg id="trafficScene" viewBox="0 0 560 560" role="img"
+           aria-label="Four aircraft moving north toward a pale coastline. Three aircraft are white and maintain five nautical mile spacing. WUK 545 is magenta, closes from behind at 300 knots, and slows to 250 knots on reaching five nautical mile spacing.">
+        <defs>
+          <linearGradient id="seaWash" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#dceff7"/>
+            <stop offset="100%" stop-color="#f1faff"/>
+          </linearGradient>
+          <linearGradient id="landWash" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#f3f7f4"/>
+            <stop offset="100%" stop-color="#fcfdfb"/>
+          </linearGradient>
+          <filter id="planeShadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" flood-color="#29404a" flood-opacity="0.20"/>
+          </filter>
+        </defs>
+
+        <rect width="560" height="560" fill="url(#seaWash)"/>
+
+        <g id="landLayer">
+          <path d="M-20 112
+                   C45 94 96 112 142 94
+                   C191 75 233 93 278 82
+                   C325 70 363 81 405 66
+                   C455 48 503 61 580 42
+                   L580 -130 L-20 -130 Z"
+                fill="url(#landWash)"/>
+          <path d="M-20 112
+                   C45 94 96 112 142 94
+                   C191 75 233 93 278 82
+                   C325 70 363 81 405 66
+                   C455 48 503 61 580 42"
+                fill="none" stroke="#9ecfe1" stroke-width="3"/>
+          <path d="M-20 121
+                   C48 103 98 121 146 103
+                   C194 85 237 103 282 92
+                   C329 80 368 91 410 76
+                   C459 58 508 71 580 52"
+                fill="none" stroke="#cfe8f1" stroke-width="10" opacity="0.55"/>
+        </g>
+
+        <g id="leadGuides" opacity="0.34">
+          <line x1="338" y1="105" x2="338" y2="190" stroke="#718792" stroke-width="1.2"/>
+          <line x1="332" y1="105" x2="344" y2="105" stroke="#718792" stroke-width="1.2"/>
+          <line x1="332" y1="190" x2="344" y2="190" stroke="#718792" stroke-width="1.2"/>
+          <text x="352" y="151" class="spacing-label">5 NM</text>
+
+          <line x1="338" y1="190" x2="338" y2="275" stroke="#718792" stroke-width="1.2"/>
+          <line x1="332" y1="275" x2="344" y2="275" stroke="#718792" stroke-width="1.2"/>
+          <text x="352" y="236" class="spacing-label">5 NM</text>
+        </g>
+
+        <g id="rearGuide" opacity="0.34">
+          <line id="rearGuideLine" x1="338" y1="275" x2="338" y2="465" stroke="#d1007d" stroke-width="1.2"/>
+          <line x1="332" y1="275" x2="344" y2="275" stroke="#d1007d" stroke-width="1.2"/>
+          <line id="rearGuideTick" x1="332" y1="465" x2="344" y2="465" stroke="#d1007d" stroke-width="1.2"/>
+          <text id="rearGuideText" x="352" y="374" class="rear-spacing-label">closing</text>
+        </g>
+
+        <g id="aircraftLayer"></g>
+      </svg>
+    </div>
+
+    <div class="controls" aria-label="Animation controls">
+      <button type="button" id="pauseButton">Pause</button>
+      <button type="button" id="restartButton">Restart</button>
+    </div>
+  </main>
+
+  <script>
+    (() => {
+      "use strict";
+
+      if (new URLSearchParams(window.location.search).get("clean") === "1") {
+        document.documentElement.classList.add("clean");
+      }
+
+      const svgNS = "http://www.w3.org/2000/svg";
+      const layer = document.getElementById("aircraftLayer");
+      const landLayer = document.getElementById("landLayer");
+      const leadGuides = document.getElementById("leadGuides");
+      const rearGuide = document.getElementById("rearGuide");
+      const rearGuideLine = document.getElementById("rearGuideLine");
+      const rearGuideTick = document.getElementById("rearGuideTick");
+      const rearGuideText = document.getElementById("rearGuideText");
+      const pauseButton = document.getElementById("pauseButton");
+      const restartButton = document.getElementById("restartButton");
+
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const centreX = 280;
+      const fiveNm = 85;
+
+      const aircraftData = [
+        { callsign: "EZY 5AR", baseY: 105, rear: false },
+        { callsign: "RYR 1WS", baseY: 190, rear: false },
+        { callsign: "EZY 8MH", baseY: 275, rear: false },
+        { callsign: "WUK 545", baseY: 465, rear: true }
+      ];
+
+      function createSvg(tag, attributes = {}) {
+        const node = document.createElementNS(svgNS, tag);
+        Object.entries(attributes).forEach(([key, value]) => node.setAttribute(key, String(value)));
+        return node;
+      }
+
+      function makeAircraft(data) {
+        const group = createSvg("g", { filter: "url(#planeShadow)" });
+        const plane = createSvg("path", {
+          d: "M0 -17 L4 -5 L17 1 L17 5 L4 4 L3 17 L-3 17 L-4 4 L-17 5 L-17 1 L-4 -5 Z",
+          fill: data.rear ? "#d1007d" : "#ffffff",
+          stroke: data.rear ? "#8e0056" : "#5c7079",
+          "stroke-width": 1.25,
+          "stroke-linejoin": "round"
+        });
+
+        const callsign = createSvg("text", {
+          x: 25,
+          y: 1,
+          class: "plane-label"
+        });
+        callsign.textContent = data.callsign;
+
+        const speed = createSvg("text", {
+          x: 25,
+          y: 18,
+          class: "speed-label"
+        });
+        speed.textContent = data.rear ? "300 kt" : "250 kt";
+
+        group.append(plane, callsign, speed);
+        layer.appendChild(group);
+
+        return { ...data, group, speed };
+      }
+
+      const planes = aircraftData.map(makeAircraft);
+      const rearTargetBaseY = aircraftData[2].baseY + fiveNm;
+
+      let startedAt = performance.now();
+      let pausedAt = 0;
+      let paused = false;
+
+      const loopDuration = 13.2;
+      const activeDuration = 11.5;
+
+      function clamp(value, min, max) {
+        return Math.min(max, Math.max(min, value));
+      }
+
+      function smoothStep(value) {
+        const p = clamp(value, 0, 1);
+        return p * p * (3 - 2 * p);
+      }
+
+      function rearState(t) {
+        if (t < 1.2) {
+          return { y: aircraftData[3].baseY, speed: 300, phase: "closing" };
+        }
+
+        if (t < 9.4) {
+          const progress = smoothStep((t - 1.2) / 8.2);
+          return {
+            y: aircraftData[3].baseY + (rearTargetBaseY - aircraftData[3].baseY) * progress,
+            speed: 300 + (250 - 300) * progress,
+            phase: progress > 0.965 ? "established" : "closing"
+          };
+        }
+
+        return { y: rearTargetBaseY, speed: 250, phase: "established" };
+      }
+
+      function update(now) {
+        if (!paused) {
+          const elapsed = (now - startedAt) / 1000;
+          const cycleTime = elapsed % loopDuration;
+          const t = Math.min(cycleTime, activeDuration);
+
+          const fadeIn = clamp(cycleTime / 0.45, 0, 1);
+          const fadeOut = cycleTime > 12.45 ? clamp((13.2 - cycleTime) / 0.55, 0, 1) : 1;
+          const sceneOpacity = Math.min(fadeIn, fadeOut);
+          document.getElementById("trafficScene").style.opacity = String(sceneOpacity);
+
+          const streamProgress = smoothStep(t / activeDuration);
+          const streamShift = -58 * streamProgress;
+          const coastShift = 38 * streamProgress;
+          const subtleSway = Math.sin(t * 0.75) * 1.5;
+
+          landLayer.setAttribute("transform", `translate(0 ${coastShift.toFixed(2)})`);
+          leadGuides.setAttribute("transform", `translate(0 ${streamShift.toFixed(2)})`);
+
+          planes.slice(0, 3).forEach((plane, index) => {
+            const bob = Math.sin(t * 0.95 + index * 0.7) * 1.2;
+            const y = plane.baseY + streamShift + bob;
+            plane.group.setAttribute("transform", `translate(${centreX} ${y.toFixed(2)})`);
+            plane.speed.textContent = "250 kt";
+          });
+
+          const rearPlane = planes[3];
+          const rear = rearState(t);
+          const rearBob = Math.sin(t * 0.95 + 2.1) * 1.2;
+          const rearY = rear.y + streamShift + rearBob;
+          rearPlane.group.setAttribute("transform", `translate(${centreX} ${rearY.toFixed(2)})`);
+          rearPlane.speed.textContent = `${Math.round(rear.speed / 5) * 5} kt`;
+
+          const thirdY = aircraftData[2].baseY + streamShift;
+          rearGuide.setAttribute("transform", "translate(0 0)");
+          rearGuideLine.setAttribute("y1", thirdY.toFixed(2));
+          rearGuideLine.setAttribute("y2", rearY.toFixed(2));
+          rearGuideTick.setAttribute("y1", rearY.toFixed(2));
+          rearGuideTick.setAttribute("y2", rearY.toFixed(2));
+          rearGuideText.setAttribute("y", ((thirdY + rearY) / 2 + 4).toFixed(2));
+          rearGuideText.textContent = rear.phase === "established" ? "5 NM" : "closing";
+          rearGuide.setAttribute("opacity", rear.phase === "established" ? "0.52" : "0.34");
+        }
+
+        requestAnimationFrame(update);
+      }
+
+      pauseButton.addEventListener("click", () => {
+        paused = !paused;
+        if (paused) {
+          pausedAt = performance.now();
+          pauseButton.textContent = "Play";
+        } else {
+          startedAt += performance.now() - pausedAt;
+          pauseButton.textContent = "Pause";
+        }
+      });
+
+      restartButton.addEventListener("click", () => {
+        startedAt = performance.now();
+        paused = false;
+        pauseButton.textContent = "Pause";
+      });
+
+      if (reducedMotion) {
+        paused = true;
+        pauseButton.textContent = "Play";
+        const t = 9.4;
+        const streamShift = -46;
+        landLayer.setAttribute("transform", "translate(0 30)");
+        leadGuides.setAttribute("transform", `translate(0 ${streamShift})`);
+
+        planes.slice(0, 3).forEach((plane) => {
+          plane.group.setAttribute("transform", `translate(${centreX} ${plane.baseY + streamShift})`);
+        });
+
+        const rear = planes[3];
+        const rearY = rearTargetBaseY + streamShift;
+        rear.group.setAttribute("transform", `translate(${centreX} ${rearY})`);
+        rear.speed.textContent = "250 kt";
+        rearGuideLine.setAttribute("y1", aircraftData[2].baseY + streamShift);
+        rearGuideLine.setAttribute("y2", rearY);
+        rearGuideTick.setAttribute("y1", rearY);
+        rearGuideTick.setAttribute("y2", rearY);
+        rearGuideText.setAttribute("y", (aircraftData[2].baseY + streamShift + rearY) / 2 + 4);
+        rearGuideText.textContent = "5 NM";
+      }
+
+      requestAnimationFrame(update);
+    })();
+  </script>
+</body>
+</html>

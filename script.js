@@ -5912,7 +5912,13 @@ map.on('load', () => {
         '1 - Passing FL150 - securing the cabin for landing\n\n' +
         '2 - FL100 flows\n\n' +
         '3 - Activation of approach phase. This is done manually (PROG -> Activate APR phase) or flying through (D)\n\n' +
-        '4 - Approach checks - when cleared to descend to an altitude.'
+        '4 - Approach checks - when cleared to descend to an altitude.',
+      embed: {
+        title: 'Traffic compression animation',
+        src:
+          'assets/traffic-animation/Line_Logic_Traffic_Animation.html?clean=1&v=20260907-1',
+        size: 'compact'
+      }
     }
   };
 
