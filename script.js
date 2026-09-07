@@ -5902,13 +5902,12 @@ map.on('load', () => {
         'This is natural, and often the case due to dense traffic flows beneath. Lets go back to ideas mentioned previously:\n\n' +
         '1 - READ THE ROOM - if aircraft are only being given small descents, use an appropriate rate of descent. If ATC give you a something in excess of 3000 or 4000, it’s likely the limit of their sector, and a rate of descent at least equal to your ideal preferred descent path should be targeted.\n\n' +
         '2 - Be aware of other aircraft - high closure rates with aircraft nearby can cause traffic advisory alerts or resolution advisories.\n\n' +
-        'If you aren’t constrained by an ATC speed instruction, consider slowing down during small descents or level segments. Don’t rely on this however. Busy airspace may require aircraft to stream in at controlled rates.\n\n' +
         'Keep updating your mental profile. Lets take a look at 2 useful techniques -',
-      embed: {
-        title: 'Traffic compression animation',
+      tool: {
+        title: 'Speed',
         src:
-          'assets/traffic-animation/Line_Logic_Traffic_Animation.html?clean=1&v=20260907-1',
-        size: 'compact'
+          'assets/traffic-animation/speed-explainer.html?v=20260907-1',
+        label: 'SPEED'
       }
     },
     20500: {

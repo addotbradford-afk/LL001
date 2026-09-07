@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Speed</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --page: #f5f7f9;
+      --panel: #ffffff;
+      --text: #3f4a55;
+      --muted: #687680;
+      --magenta: #c65f98;
+      --border: rgba(91, 101, 115, 0.2);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      margin: 0;
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      color: var(--text);
+      background: var(--page);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 255px;
+      gap: 32px;
+      align-items: center;
+      width: min(760px, 100%);
+      padding: 32px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 14px 36px rgba(38, 46, 55, 0.12);
+    }
+
+    .copy {
+      min-width: 0;
+    }
+
+    .eyebrow {
+      margin: 0 0 9px;
+      color: var(--magenta);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      color: #303944;
+      font-size: clamp(1.7rem, 4vw, 2.35rem);
+      line-height: 1.05;
+    }
+
+    p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+
+    iframe {
+      display: block;
+      width: 255px;
+      height: 255px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #e7f5fb;
+    }
+
+    @media (max-width: 680px) {
+      body {
+        padding: 14px;
+      }
+
+      main {
+        grid-template-columns: 1fr;
+        gap: 22px;
+        padding: 22px;
+      }
+
+      iframe {
+        width: min(255px, 100%);
+        height: min(255px, calc(100vw - 72px));
+        margin: 0 auto;
+        aspect-ratio: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="copy" aria-labelledby="speedTitle">
+      <p class="eyebrow">Technique</p>
+      <h1 id="speedTitle">Speed</h1>
+      <p>If you aren’t constrained by an ATC speed instruction, consider slowing down during small descents or level segments. Don’t rely on this however. Busy airspace may require aircraft to stream in at controlled rates.</p>
+    </section>
+
+    <iframe
+      src="Line_Logic_Traffic_Animation.html?clean=1&amp;v=20260907-1"
+      title="Traffic compression animation"
+      sandbox="allow-scripts"
+      referrerpolicy="no-referrer"
+    ></iframe>
+  </main>
+</body>
+</html>
