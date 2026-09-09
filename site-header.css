@@ -1,0 +1,19 @@
+/* Standard Line Logic navigation: based on the Pop Quiz header. */
+.site-header{box-sizing:border-box;width:100%;max-width:1200px;margin:0 auto;padding:0 44px}
+.site-header-inner{position:relative;box-sizing:border-box;height:104px;display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:1px solid #e9e5ef}
+.site-brand{display:inline-flex;align-items:center;gap:12px;min-width:0;color:#2e108d;text-decoration:none}
+.site-brand img{display:block;width:39px;height:45px;object-fit:contain;border-radius:10px}
+.site-brand-copy{display:grid;gap:3px}
+.site-brand-eyebrow{font-size:8px;font-weight:650;letter-spacing:1.1px;color:#e5007d}
+.site-brand strong{font-size:13px;font-weight:650;letter-spacing:1.7px;white-space:nowrap}
+.site-header-actions{display:flex;align-items:center;gap:20px;flex-shrink:0}
+.site-home-link{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:40px;padding:8px 12px;border:1px solid #e9e5ef;border-radius:999px;color:#696776;background:#fff;font:400 13px/1.2 Arial,Helvetica,sans-serif;text-decoration:none;white-space:nowrap;transition:color .15s,background .15s,border-color .15s}
+.site-home-link svg{width:16px;height:16px;flex-shrink:0}
+.site-home-link:hover{color:#2e108d;background:#f0ebfa;border-color:#d8d0e5}
+.site-home-link:focus-visible,.site-brand:focus-visible{outline:3px solid #e5007d;outline-offset:4px}
+.site-session-slot .session-control{position:static;z-index:auto;margin:0;box-shadow:none;backdrop-filter:none}
+.home-page .home-shell{min-height:calc(100vh - 104px);min-height:calc(100dvh - 104px)}
+@media(max-width:600px){.site-header{padding:0 20px}.site-header-inner{height:82px;gap:12px}.site-header-actions{gap:12px}.site-home-link{min-height:44px;padding:8px 10px}.home-page .home-shell{min-height:calc(100dvh - 82px)}}
+@media(max-width:520px){.site-header:has(.site-session-slot .session-control){padding-bottom:44px}.site-session-slot{position:absolute;top:90px;right:0}.site-session-slot .session-control{min-height:32px;padding:2px 4px 2px 10px}.home-page:has(.site-session-slot .session-control) .home-shell{min-height:calc(100dvh - 126px)}}
+@media(prefers-reduced-motion:reduce){.site-home-link{transition:none}}
+

@@ -12,8 +12,10 @@
 .return-home-actions button:focus-visible,.return-home-actions a:focus-visible{outline:3px solid #e5007d;outline-offset:3px}
 @media(max-width:420px){.return-home-dialog{padding:24px 20px}.return-home-dialog h2{font-size:24px}.return-home-actions{flex-direction:column}}
 
-.scenario-home-link{box-sizing:border-box;display:inline-flex;align-items:center;gap:7px;min-height:44px;padding:8px 10px;margin-left:auto;border:1px solid #e9e5ef;border-radius:999px;color:#696776;background:#fff;font-size:13px;text-decoration:none;white-space:nowrap}
-.scenario-home-link svg{width:16px;height:16px}
-.scenario-home-link:hover{color:#2e108d;background:#f0ebfa}
-.scenario-home-link:focus-visible{outline:3px solid #e5007d;outline-offset:3px}
-@media(max-width:420px){#stagePanel{gap:8px}.stage-brand-logo{width:92px}.stage-brand-meta{min-width:60px;padding-left:8px}.scenario-home-link{padding:8px}}
+/* Keep the flight identity left and the standard Home button right. */
+.scenario-site-header{position:absolute;top:0;left:50%;transform:translateX(-50%);z-index:40;pointer-events:none}
+.scenario-site-header .site-header-inner{background:rgba(255,255,255,.93);backdrop-filter:blur(12px);pointer-events:auto}
+.scenario-site-header #stagePanel{position:static;max-width:none;min-width:0;padding:0;border:0;border-radius:0;box-shadow:none;background:transparent}
+#map .maplibregl-ctrl-top-right{top:104px}
+@media(max-width:600px){#map .maplibregl-ctrl-top-right{top:82px}}
+@media(max-width:420px){.scenario-site-header #stagePanel{gap:8px}.stage-brand-logo{width:92px}.stage-brand-meta{min-width:60px;padding-left:8px}}

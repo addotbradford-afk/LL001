@@ -22,7 +22,8 @@
     rel="stylesheet"
     href="style.css?v=20260906-32"
   >
-  <link rel="stylesheet" href="home-navigation.css?v=20260909-1">
+  <link rel="stylesheet" href="home-navigation.css?v=20260910-1">
+  <link rel="stylesheet" href="site-header.css?v=20260910-1">
 </head>
 
 <body>
@@ -31,7 +32,9 @@
   <div id="map"></div>
 
   <!-- LINE LOGIC SCENARIO IDENTITY -->
-  <header
+  <header class="site-header scenario-site-header" aria-label="Line Logic navigation">
+  <div class="site-header-inner">
+  <div
     id="stagePanel"
     aria-label="Line Logic scenario LL001, revision August 26"
   >
@@ -58,10 +61,12 @@
       <h2 id="stageName"></h2>
       <p id="stageText"></p>
     </div>
-    <a id="scenarioHome" class="scenario-home-link" href="https://addotbradford-afk.github.io/line-logic/?home=1" title="Line Logic home">
+  </div>
+    <a id="scenarioHome" class="site-home-link" href="https://addotbradford-afk.github.io/line-logic/?home=1" title="Line Logic home">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-8H9v8H4a1 1 0 0 1-1-1Z"/></svg>
       <span>Home</span>
     </a>
+  </div>
   </header>
 
   <!-- TELTU ROUTE SELECTION -->
