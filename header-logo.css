@@ -1,0 +1,7 @@
+/* Exact Pop Quiz top-left logo dimensions and colours. */
+.site-header .site-brand{display:inline-flex;align-items:center;gap:12px;color:#292929;flex-shrink:0}
+.site-header .site-brand img{display:block;width:52px!important;height:52px!important;min-width:52px;max-width:none;object-fit:contain;border-radius:0;flex-shrink:0;filter:none!important;opacity:1!important;transform:none!important;mix-blend-mode:normal}
+.site-header .site-brand-copy{display:grid;gap:0}
+.site-header .site-brand-eyebrow{font-size:9px;font-weight:650;letter-spacing:1.6px;color:#847781;line-height:1.5}
+.site-header .site-brand strong{font-size:15px;font-weight:750;letter-spacing:2px;color:#292929;line-height:1.5}
+@media(max-width:480px){.site-header .site-brand img{width:44px!important;height:44px!important;min-width:44px}.site-header .site-brand strong{font-size:12px;letter-spacing:1.5px}.site-header .site-brand-eyebrow{font-size:8px}}
