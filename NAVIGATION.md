@@ -10,3 +10,7 @@ Main-site account controls mount in `.site-session-slot`, alongside Home on desk
 
 Leaving a live scenario or a single/multiplayer quiz requires the existing Stay here / Return home overlay. Menu, search and setup pages return directly. Keep these behaviours when adding pages.
 
+
+## LL001 scenario exit
+
+LL001 uses an Exit control with a boxed X in place of Home. Its confirmation asks “Are you sure you want to exit?” with “No, stay here” and “Yes”. Confirming returns to the scenarios dashboard at `https://linelogic.uk/wuk/guided.html`, preserving the signed-in session through the account-session handoff. Escape or No cancels and restores focus to Exit.

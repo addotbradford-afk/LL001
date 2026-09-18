@@ -22,7 +22,7 @@
     rel="stylesheet"
     href="style.css?v=20260906-32"
   >
-  <link rel="stylesheet" href="home-navigation.css?v=20260910-1">
+  <link rel="stylesheet" href="home-navigation.css?v=20260918-exit1">
   <link rel="stylesheet" href="site-header.css?v=20260910-1">
 <meta name="referrer" content="no-referrer"><script src="account-session.js?v=1"></script></head>
 
@@ -62,10 +62,7 @@
       <p id="stageText"></p>
     </div>
   </div>
-    <a id="scenarioHome" class="site-home-link" href="https://linelogic.uk/wuk/?home=1" title="WUK home">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-8H9v8H4a1 1 0 0 1-1-1Z"/></svg>
-      <span>Home</span>
-    </a>
+    <a id="scenarioHome" class="site-home-link" href="https://linelogic.uk/wuk/guided.html" title="Exit scenario" aria-label="Exit scenario"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="m8 8 8 8m0-8-8 8"/></svg><span>Exit</span></a>
   </div>
   </header>
 
@@ -917,13 +914,12 @@
     hidden
   ></button>
 
-  <dialog id="returnHomeDialog" class="return-home-dialog" aria-labelledby="return-home-title" aria-describedby="return-home-description">
-    <svg class="return-home-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-8H9v8H4a1 1 0 0 1-1-1Z"/></svg>
-    <h2 id="return-home-title">Return to WUK?</h2>
-    <p id="return-home-description">Are you sure you want to leave this scenario and return to the WUK home menu?</p>
+  <dialog id="returnHomeDialog" class="return-home-dialog" aria-labelledby="return-home-title">
+    <svg class="return-home-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="m8 8 8 8m0-8-8 8"/></svg>
+    <h2 id="return-home-title">Are you sure you want to exit?</h2>
     <div class="return-home-actions">
-      <button id="stayInScenario" type="button">Stay here</button>
-      <a href="https://linelogic.uk/wuk/?home=1">Return home</a>
+      <button id="stayInScenario" type="button">No, stay here</button>
+      <a href="https://linelogic.uk/wuk/guided.html">Yes</a>
     </div>
   </dialog>
   <script src="home-navigation.js?v=20260909-1"></script>
