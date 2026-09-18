@@ -1,6 +1,6 @@
 # Line Logic header standard
 
-The Pop Quiz navigation is the site-wide default: keep the existing page logo at the top left, and a small rounded Home link with a house icon at the top right. Home returns to the main Line Logic opening page.
+The Pop Quiz navigation is the site-wide default: keep the existing page logo at the top left, and a small rounded Home link with a house icon at the top right. Home returns to the WUK home menu at `https://linelogic.uk/wuk/?home=1`. Signed-in users return directly to the menu without replaying the opening animation.
 
 Use `site-header.css` and the `.site-header` / `.site-header-inner` / `.site-home-link` markup for top-level static pages. The same stylesheet is kept in the main Line Logic and LL001 repositories; keep those copies aligned. Pop Quiz uses its existing `QuizHeader` component with equivalent positioning and styling.
 
