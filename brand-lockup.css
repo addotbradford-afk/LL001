@@ -1,0 +1,7 @@
+/* Match the Pop Quiz WUK logo lockup across static pages. */
+.site-header .site-brand{display:inline-flex;align-items:center;gap:12px;color:#292929;flex-shrink:0}
+.site-header .site-brand img{width:52px;height:52px;object-fit:contain;border-radius:0;flex-shrink:0}
+.site-header .site-brand-copy{display:grid;gap:0}
+.site-header .site-brand-eyebrow{font-size:9px;font-weight:650;letter-spacing:1.6px;color:#847781;line-height:1.5}
+.site-header .site-brand strong{font-size:15px;font-weight:750;letter-spacing:2px;color:#292929;line-height:1.5}
+@media(max-width:480px){.site-header .site-brand img{width:44px;height:44px}.site-header .site-brand strong{font-size:12px;letter-spacing:1.5px}.site-header .site-brand-eyebrow{font-size:8px}}
